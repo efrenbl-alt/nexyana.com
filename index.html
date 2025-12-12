@@ -13,6 +13,10 @@
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Leaflet (interactive map) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <!-- Tailwind Config -->
     <script>
@@ -512,10 +516,8 @@
                                                 </div>
                                                 <div class="text-xs text-slate-500" data-i18n="db_map_hint">Toca un pin para ver detalles</div>
                                             </div>
-                                            <div class="relative w-full aspect-[16/10] sm:aspect-[16/9] bg-gradient-to-b from-slate-100 to-slate-50">
-                                                <div id="dbMapCanvas" class="absolute inset-0">
-                                                    <!-- rendered by JS (SVG) -->
-                                                </div>
+                                            <div class="w-full bg-slate-100">
+                                                <div id="dbLeafletMap" class="w-full h-[340px] sm:h-[420px] lg:h-[520px]"></div>
                                             </div>
                                             <div class="px-4 py-3 bg-white border-t border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
                                                 <div class="flex items-center gap-3">
@@ -1467,10 +1469,16 @@
         }
 
         function renderDbMap() {
-            const canvas = document.getElementById('dbMapCanvas');
+            const mapEl = document.getElementById('dbLeafletMap');
             const detail = document.getElementById('dbMapDetail');
             const stats = document.getElementById('dbMapStats');
-            if (!canvas || !detail) return;
+            if (!mapEl || !detail) return;
+
+            if (typeof window.L === 'undefined') {
+                // Leaflet not loaded (offline)
+                mapEl.innerHTML = `<div class="p-6 text-sm text-slate-600">${currentLang === 'en' ? 'Map library not loaded. Try running on localhost/online.' : 'No se cargó el mapa. Prueba en localhost/con internet.'}</div>`;
+                return;
+            }
 
             const trade = (document.getElementById('dbFilterTrade')?.value || 'all');
             const city = (document.getElementById('dbFilterCity')?.value || '').trim().toLowerCase();
@@ -1506,72 +1514,116 @@
                     : `${supplyCount} pros • ${demandCount} demanda (mock)`;
             }
 
-            const background = `
-                <rect x="0" y="0" width="100" height="60" fill="url(#bg)"/>
-                <path d="M8 48 C 22 40, 38 38, 55 30 C 67 25, 78 24, 92 18" fill="none" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="2 3"/>
-                <text x="6" y="12" font-size="3.2" fill="#64748b">${currentLang === 'en' ? 'Quito (mock)' : 'Quito (mock)'}</text>
-                <text x="72" y="55" font-size="3.0" fill="#94a3b8">${currentLang === 'en' ? 'Valleys' : 'Valles'}</text>
-            `;
+            // Keep Leaflet map instance around
+            if (!window.__nexyanaLeaflet) {
+                const map = L.map(mapEl, {
+                    zoomControl: true,
+                    attributionControl: true,
+                    scrollWheelZoom: false,
+                }).setView([-0.1807, -78.4678], 12);
 
-            const supplyDots = filteredSupply.map((p, idx) => {
-                const pt = latLonToXY(p.lat, p.lon);
-                const x = (pt.x * 100).toFixed(2);
-                const y = (pt.y * 60).toFixed(2);
-                const fill = p.verified ? '#0f766e' : '#14b8a6';
-                const stroke = '#0f172a';
-                const title = `${p.first} ${p.last} (${p.trade})`;
-                return `
-                    <g class="cursor-pointer" onclick="selectMapPoint('supply', ${idx})">
-                        <circle cx="${x}" cy="${y}" r="1.8" fill="${fill}" stroke="${stroke}" stroke-width="0.3"></circle>
-                        <title>${title}</title>
-                    </g>
-                `;
-            }).join('');
+                // CARTO tiles (nice “Google-like” basemap)
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                    subdomains: 'abcd',
+                    maxZoom: 19,
+                    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+                }).addTo(map);
 
-            const demandDots = demandPins.map((d, idx) => {
-                const pt = latLonToXY(d.lat, d.lon);
-                const x = (pt.x * 100).toFixed(2);
-                const y = (pt.y * 60).toFixed(2);
-                const fill = '#d97706';
-                const stroke = '#0f172a';
-                const title = `${currentLang === 'en' ? d.label_en : d.label_es} • ${d.count}`;
-                return `
-                    <g class="cursor-pointer" onclick="selectMapPoint('demand', ${idx})">
-                        <circle cx="${x}" cy="${y}" r="${clamp(1.6 + d.count * 0.05, 1.8, 3.0)}" fill="${fill}" stroke="${stroke}" stroke-width="0.3" opacity="0.9"></circle>
-                        <title>${title}</title>
-                    </g>
-                `;
-            }).join('');
+                const layers = {
+                    supply: L.layerGroup().addTo(map),
+                    demand: L.layerGroup().addTo(map),
+                    you: L.layerGroup().addTo(map),
+                };
 
-            const youDot = geo
-                ? (() => {
-                    const pt = latLonToXY(geo.lat, geo.lon);
-                    const x = (pt.x * 100).toFixed(2);
-                    const y = (pt.y * 60).toFixed(2);
-                    return `
-                        <g>
-                            <circle cx="${x}" cy="${y}" r="2.2" fill="#0f172a" opacity="0.95"></circle>
-                            <circle cx="${x}" cy="${y}" r="4.2" fill="none" stroke="#0f172a" stroke-width="0.35" opacity="0.25"></circle>
-                            <title>${currentLang === 'en' ? 'You' : 'Tú'}</title>
-                        </g>
-                    `;
-                })()
-                : '';
+                window.__nexyanaLeaflet = { map, layers, lastCenter: map.getCenter(), lastZoom: map.getZoom() };
+            }
 
-            canvas.innerHTML = `
-                <svg viewBox="0 0 100 60" preserveAspectRatio="none" class="w-full h-full">
-                    <defs>
-                        <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
-                            <stop offset="0" stop-color="#f1f5f9"/>
-                            <stop offset="1" stop-color="#f8fafc"/>
-                        </linearGradient>
-                    </defs>
-                    ${background}
-                    ${demandDots}
-                    ${supplyDots}
-                    ${youDot}
-                </svg>
-            `;
+            const { map, layers } = window.__nexyanaLeaflet;
+            layers.supply.clearLayers();
+            layers.demand.clearLayers();
+            layers.you.clearLayers();
+
+            // Marker styles
+            const supplyIcon = (verified) => L.divIcon({
+                className: '',
+                html: `<div style="
+                    width: 14px; height: 14px; border-radius: 9999px;
+                    background: ${verified ? '#0f766e' : '#14b8a6'};
+                    border: 2px solid #0f172a;
+                    box-shadow: 0 6px 14px rgba(15,23,42,0.18);
+                "></div>`,
+                iconSize: [14, 14],
+                iconAnchor: [7, 7],
+            });
+
+            const demandIcon = (count) => L.divIcon({
+                className: '',
+                html: `<div style="
+                    min-width: 28px; height: 28px; border-radius: 9999px;
+                    background: #d97706;
+                    border: 2px solid #0f172a;
+                    color: white;
+                    font-weight: 800;
+                    font-size: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 10px 22px rgba(15,23,42,0.18);
+                ">${count}</div>`,
+                iconSize: [28, 28],
+                iconAnchor: [14, 14],
+            });
+
+            const youIcon = L.divIcon({
+                className: '',
+                html: `<div style="
+                    width: 16px; height: 16px; border-radius: 9999px;
+                    background: #0f172a;
+                    border: 3px solid white;
+                    box-shadow: 0 10px 24px rgba(15,23,42,0.25);
+                "></div>`,
+                iconSize: [16, 16],
+                iconAnchor: [8, 8],
+            });
+
+            // Add supply markers
+            filteredSupply.forEach((p, idx) => {
+                if (typeof p.lat !== 'number' || typeof p.lon !== 'number') return;
+                const m = L.marker([p.lat, p.lon], { icon: supplyIcon(p.verified) })
+                    .addTo(layers.supply)
+                    .on('click', () => selectMapPoint('supply', idx));
+                m.bindTooltip(`${p.first} ${p.last} • ${p.trade}`, { direction: 'top', opacity: 0.9, sticky: true });
+            });
+
+            // Add demand markers
+            demandPins.forEach((d, idx) => {
+                const m = L.marker([d.lat, d.lon], { icon: demandIcon(d.count) })
+                    .addTo(layers.demand)
+                    .on('click', () => selectMapPoint('demand', idx));
+                m.bindTooltip(`${currentLang === 'en' ? d.label_en : d.label_es} • ${d.count}`, { direction: 'top', opacity: 0.9, sticky: true });
+            });
+
+            // Add user marker if available
+            if (geo) {
+                L.marker([geo.lat, geo.lon], { icon: youIcon }).addTo(layers.you);
+                L.circle([geo.lat, geo.lon], { radius: 600, color: '#0f172a', weight: 1, fillColor: '#0f172a', fillOpacity: 0.08 }).addTo(layers.you);
+            }
+
+            // Fit bounds to visible points (only on first open or if map hasn't been used)
+            const points = [];
+            filteredSupply.forEach(p => (typeof p.lat === 'number' && typeof p.lon === 'number') && points.push([p.lat, p.lon]));
+            demandPins.forEach(d => points.push([d.lat, d.lon]));
+            if (geo) points.push([geo.lat, geo.lon]);
+
+            try {
+                if (points.length) {
+                    const b = L.latLngBounds(points);
+                    map.fitBounds(b.pad(0.25), { animate: false });
+                } else {
+                    map.setView([-0.1807, -78.4678], 12, { animate: false });
+                }
+                setTimeout(() => map.invalidateSize(), 50);
+            } catch (e) {}
 
             // If nothing selected, keep an informative placeholder
             if (!detail.dataset.selected) {
