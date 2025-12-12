@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexyana | The End of Blind Hiring</title>
+    <meta name="description" content="Connecting demanding companies and households with audited technicians. Certification for professionals and security for hiring.">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a', // Slate 900
+                            primary: '#0f766e', // Teal 700
+                            accent: '#14b8a6', // Teal 500
+                            bg: '#f8fafc', // Slate 50
+                            danger: '#dc2626', // Red 600
+                            gold: '#d97706', // Amber 600
+                        }
+                    },
+                    animation: {
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'fade-out': 'fadeOut 0.5s ease-in forwards',
+                    },
+                    keyframes: {
+                        slideUp: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeOut: {
+                            '0%': { opacity: '1' },
+                            '100%': { opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .tab-active {
+            border-bottom: 2px solid #0f766e;
+            color: #0f766e;
+            font-weight: 600;
+        }
+        .tab-inactive {
+            color: #64748b;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-inactive:hover {
+            color: #334155;
+            border-bottom: 2px solid #cbd5e1;
+        }
+        /* Notification Toast Styling */
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 50;
+            max-width: 320px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased relative">
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-2">
+                    <svg class="h-8 w-8 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span class="font-bold text-xl tracking-tight text-brand-dark">Nexyana</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="flex items-center gap-4">
+                    <!-- Language Switcher -->
+                    <div class="flex items-center bg-slate-100 rounded-lg p-1 mr-2 md:mr-4">
+                        <button onclick="setLanguage('en')" id="btn-en" class="px-3 py-1 text-xs font-bold rounded-md transition-colors bg-white text-brand-primary shadow-sm">EN</button>
+                        <button onclick="setLanguage('es')" id="btn-es" class="px-3 py-1 text-xs font-bold rounded-md transition-colors text-slate-500 hover:text-slate-700">ES</button>
+                    </div>
+
+                    <div class="hidden md:flex items-center gap-4">
+                        <a href="#proceso" class="text-sm font-medium text-slate-600 hover:text-brand-primary" data-i18n="nav_how">Our Standard</a>
+                        <div class="h-6 w-px bg-slate-300 mx-2"></div>
+                        <a href="#talento" class="text-sm font-semibold text-slate-700 hover:text-brand-dark" data-i18n="nav_pro">For Talent</a>
+                        <a href="#clientes" class="bg-brand-dark text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20" data-i18n="nav_hire">Find Talent</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-brand-dark overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 100 L100 0 L100 100 Z" fill="white"/>
+            </svg>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 lg:pt-24 lg:pb-32 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
+                <span data-i18n="hero_title_1">The End of</span> <span class="text-brand-accent" data-i18n="hero_title_2">Blind Hiring</span>
+            </h1>
+            <p class="text-xl text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed" data-i18n="hero_subtitle">
+                Don't play Russian Roulette with your hiring. We connect demanding clients with technicians who have passed <strong>real physical exams</strong> and <strong>criminal background checks</strong>.
+            </p>
+
+            <!-- Roles -->
+            <div class="flex flex-col md:flex-row justify-center gap-6 max-w-4xl mx-auto">
+                <!-- Client Card -->
+                <div class="group relative bg-white rounded-2xl p-1 text-left w-full md:w-1/2 hover:scale-[1.02] transition-transform duration-300 cursor-pointer" onclick="scrollToSection('clientes')">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-brand-accent to-brand-primary rounded-2xl opacity-20 group-hover:opacity-100 blur transition duration-300"></div>
+                    <div class="relative bg-white rounded-xl p-6 h-full flex flex-col items-start">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900" data-i18n="card_client_title">I Need Verified Talent</h3>
+                        <p class="text-slate-500 mt-2 text-sm" data-i18n="card_client_desc">Stop risking your assets. Access our database of vetted professionals.</p>
+                        <span class="mt-4 text-brand-primary font-bold text-sm flex items-center group-hover:underline">
+                            <span data-i18n="card_client_cta">View Safe Profiles</span> <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Talent Card -->
+                <div class="group relative bg-slate-800 rounded-2xl p-1 text-left w-full md:w-1/2 hover:scale-[1.02] transition-transform duration-300 cursor-pointer border border-slate-700" onclick="scrollToSection('talento')">
+                    <div class="relative bg-slate-900 rounded-xl p-6 h-full flex flex-col items-start">
+                        <div class="w-12 h-12 bg-slate-800 text-brand-gold rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white" data-i18n="card_talent_title">I am an Expert Pro</h3>
+                        <p class="text-slate-400 mt-2 text-sm" data-i18n="card_talent_desc">Tired of competing with amateurs? Prove your skills and charge what you're worth.</p>
+                        <span class="mt-4 text-brand-accent font-bold text-sm flex items-center group-hover:underline">
+                            <span data-i18n="card_talent_cta">Get Certified Now</span> <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Authority Section -->
+    <section id="proceso" class="py-16 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-slate-900 mb-8" data-i18n="process_title">The "Iron-Clad" Validation Standard</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 bg-brand-bg rounded-full flex items-center justify-center mb-4 text-brand-primary">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                    <h3 class="font-bold text-slate-800" data-i18n="step1_title">1. Workshop Stress Test</h3>
+                    <p class="text-sm text-slate-500 max-w-xs" data-i18n="step1_desc">CVs lie. Hands don't. Candidates must fix real breakdowns in our testing labs.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 bg-brand-bg rounded-full flex items-center justify-center mb-4 text-brand-primary">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="font-bold text-slate-800" data-i18n="step2_title">2. 360° Background Scan</h3>
+                    <p class="text-sm text-slate-500 max-w-xs" data-i18n="step2_desc">We check criminal records, judicial history, and drug screenings. No exceptions.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 bg-brand-bg rounded-full flex items-center justify-center mb-4 text-brand-primary">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.131A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path></svg>
+                    </div>
+                    <h3 class="font-bold text-slate-800" data-i18n="step3_title">3. The Elite 20% Badge</h3>
+                    <p class="text-sm text-slate-500 max-w-xs" data-i18n="step3_desc">Only the top 20% survive our filter. If they are on Nexyana, they are the best.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLIENT SECTION -->
+    <section id="clientes" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <span class="text-brand-primary font-bold tracking-wider uppercase text-sm" data-i18n="client_tag">Choose your Peace of Mind</span>
+                <h2 class="text-3xl font-bold text-slate-900 mt-2" data-i18n="client_title">Solutions for every risk level</h2>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="flex justify-center mb-12 border-b border-slate-200">
+                <button onclick="switchTab('hogar')" id="tab-hogar" class="tab-active px-6 py-4 text-sm sm:text-base font-medium transition focus:outline-none" data-i18n="tab_home">Households</button>
+                <button onclick="switchTab('pyme')" id="tab-pyme" class="tab-inactive px-6 py-4 text-sm sm:text-base font-medium transition focus:outline-none" data-i18n="tab_sme">SMBs</button>
+                <button onclick="switchTab('corp')" id="tab-corp" class="tab-inactive px-6 py-4 text-sm sm:text-base font-medium transition focus:outline-none" data-i18n="tab_corp">Corporates</button>
+            </div>
+
+            <!-- Content Container -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 min-h-[400px] transition-all duration-300">
+                
+                <!-- HOME Content -->
+                <div id="content-hogar" class="p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center animate-fade-in">
+                    <div class="md:w-1/2">
+                        <div class="inline-block px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-bold mb-4" data-i18n="home_badge">FAMILY SAFETY</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4" data-i18n="home_head">Who enters your home?</h3>
+                        <p class="text-slate-600 mb-6 text-lg" data-i18n="home_desc">Would you give your house keys to a stranger? 65% of informal services end in theft or bad repairs. Don't risk it.</p>
+                        <button onclick="openModal('client', 'Acceso Hogar - $49')" class="w-full md:w-auto bg-brand-dark hover:bg-slate-800 text-white font-bold py-3 px-8 rounded-lg transition shadow-lg" data-i18n="home_btn">
+                            Book Safe Technician ($49)
+                        </button>
+                    </div>
+                    <div class="md:w-1/2 bg-blue-50 rounded-xl p-6 border border-blue-100">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="h-12 w-12 rounded-full bg-slate-300 flex items-center justify-center text-slate-500 font-bold">CM</div>
+                            <div>
+                                <div class="font-bold text-slate-800">Carlos M.</div>
+                                <div class="text-xs text-slate-500" data-i18n="home_profile">Certified Plumber • Gold Level</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="h-2 bg-slate-200 rounded w-3/4"></div>
+                            <div class="h-2 bg-slate-200 rounded w-1/2"></div>
+                            <div class="flex gap-2 mt-4">
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded" data-i18n="tag_background">Background OK</span>
+                                <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded" data-i18n="tag_exam">Tech Exam 98/100</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SME Content -->
+                <div id="content-pyme" class="hidden p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center animate-fade-in">
+                    <div class="md:w-1/2">
+                        <div class="inline-block px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-xs font-bold mb-4" data-i18n="sme_badge">PROFIT PROTECTION</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4" data-i18n="sme_head">Cheap labor is expensive.</h3>
+                        <p class="text-slate-600 mb-6 text-lg" data-i18n="sme_desc">A broken machine costs you $500/hour. An incompetent technician costs you clients. Hire someone who fixes it the first time.</p>
+                        <button onclick="openModal('client', 'Membresía PYME - $129')" class="w-full md:w-auto bg-brand-primary hover:bg-teal-800 text-white font-bold py-3 px-8 rounded-lg transition shadow-lg" data-i18n="sme_btn">
+                            Start SMB Plan ($129/mo)
+                        </button>
+                    </div>
+                    <div class="md:w-1/2 bg-teal-50 rounded-xl p-8 border border-teal-100 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-brand-primary mb-2">-40%</div>
+                            <p class="text-slate-600 font-medium" data-i18n="sme_stat">Reduction in staff turnover in certified SMBs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CORP Content -->
+                <div id="content-corp" class="hidden p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center animate-fade-in">
+                    <div class="md:w-1/2">
+                        <div class="inline-block px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-bold mb-4" data-i18n="corp_badge">SCALE & COMPLIANCE</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4" data-i18n="corp_head">Mass Hiring, Zero Headache.</h3>
+                        <p class="text-slate-600 mb-6 text-lg" data-i18n="corp_desc">Need 50 techs in 3 cities by Monday? We have the pre-vetted pool. Integration with your ATS included.</p>
+                        <button onclick="openModal('client', 'Plan Corporativo')" class="w-full md:w-auto bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-8 rounded-lg transition shadow-lg" data-i18n="corp_btn">
+                            Book Strategy Call
+                        </button>
+                    </div>
+                    <div class="md:w-1/2 bg-slate-100 rounded-xl p-8 border border-slate-200">
+                        <h4 class="font-bold text-slate-700 mb-4" data-i18n="corp_dash">Corporate Dashboard</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm text-slate-600"><span data-i18n="dash_active">Active Techs</span> <span class="font-bold">1,240</span></div>
+                            <div class="w-full bg-slate-300 rounded-full h-2"><div class="bg-brand-dark h-2 rounded-full" style="width: 85%"></div></div>
+                            <div class="flex justify-between text-sm text-slate-600 pt-2"><span data-i18n="dash_trust">Trust Index</span> <span class="font-bold text-green-600">99.8%</span></div>
+                            <div class="w-full bg-slate-300 rounded-full h-2"><div class="bg-green-500 h-2 rounded-full" style="width: 98%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TALENT SECTION -->
+    <section id="talento" class="py-24 bg-brand-dark relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-accent via-brand-primary to-brand-dark"></div>
+        <div class="absolute bottom-0 right-0 -mb-20 -mr-20 w-96 h-96 bg-brand-gold rounded-full opacity-5 blur-[100px]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <div>
+                    <span class="text-brand-gold font-bold tracking-wider uppercase text-sm mb-2 block" data-i18n="talent_tag">For The Professional</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
+                        <span data-i18n="talent_head_1">Stop competing on price.</span> <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-white" data-i18n="talent_head_2">Get paid for your quality.</span>
+                    </h2>
+                    <p class="text-lg text-slate-300 mb-8" data-i18n="talent_desc">
+                        Amateurs charge cheap and ruin the market. You are an expert. Prove it. Our badge separates you from the crowd and gets you clients who value skill over savings.
+                    </p>
+
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-slate-800 border border-slate-700 text-brand-gold">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"></path></svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-white" data-i18n="feat1_title">The "Elite" Badge</h4>
+                                <p class="text-slate-400 text-sm" data-i18n="feat1_desc">A physical and digital seal that instantly builds trust with homeowners and CEOs.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-slate-800 border border-slate-700 text-brand-gold">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-white" data-i18n="feat2_title">Premium Rates</h4>
+                                <p class="text-slate-400 text-sm" data-i18n="feat2_desc">Our certified pros earn 35% more because they offer zero risk to the client.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="openModal('talent', 'Examen de Certificación - $20')" class="px-8 py-4 bg-gradient-to-r from-brand-accent to-brand-primary hover:from-teal-400 hover:to-teal-600 text-white font-bold rounded-lg shadow-lg shadow-teal-900/50 transform transition hover:-translate-y-1" data-i18n="talent_btn">
+                            Claim My Badge ($20)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Visual Element for Talent -->
+                <div class="relative hidden lg:block">
+                    <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 transform rotate-2 hover:rotate-0 transition duration-500 shadow-2xl">
+                        <div class="flex items-center justify-between mb-6 border-b border-slate-700 pb-4">
+                            <div>
+                                <h3 class="text-white font-bold text-lg" data-i18n="cert_title">Competence Certificate</h3>
+                                <p class="text-slate-400 text-xs">ID: NEX-8821-X</p>
+                            </div>
+                            <div class="text-brand-gold">
+                                <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-400" data-i18n="cert_spec">Specialty</span>
+                                <span class="text-white font-semibold">Industrial Electrician</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-400" data-i18n="cert_score">Technical Score</span>
+                                <span class="text-green-400 font-semibold">98/100</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-400" data-i18n="cert_bg">Background</span>
+                                <span class="text-green-400 font-semibold">VERIFIED</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-700 text-center">
+                            <span class="text-brand-accent text-xs font-mono tracking-widest">VALIDATED BY NEXYANA</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <span class="font-bold text-xl text-brand-dark">Nexyana</span>
+                <p class="text-slate-500 text-sm mt-1" data-i18n="footer_tag">The new standard of trust.</p>
+            </div>
+            <div class="text-center mt-8 text-xs text-slate-400">
+                &copy; 2024 Nexyana Inc.
+            </div>
+        </div>
+    </footer>
+
+    <!-- REAL TIME NOTIFICATION TOAST -->
+    <div id="toast" class="toast-notification bg-white border border-slate-200 rounded-lg p-4 flex items-center gap-3 hidden transform translate-y-full transition-all duration-500">
+        <div class="h-10 w-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div>
+            <p class="text-sm font-bold text-slate-800" id="toast-title">New Registration</p>
+            <p class="text-xs text-slate-500" id="toast-body">Juan P. just registered.</p>
+        </div>
+    </div>
+
+    <!-- UNIFIED DUAL MODAL -->
+    <div id="validationModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-slate-900 bg-opacity-80 transition-opacity backdrop-blur-sm" onclick="closeModal()"></div>
+
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <div class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full relative">
+                
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 z-10">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <div id="modalHeader" class="px-6 py-6 border-b border-slate-100">
+                    <h3 class="text-xl font-bold text-brand-dark" id="modalTitle">Dynamic Title</h3>
+                    <p class="text-sm text-slate-500 mt-1" id="modalSubtitle">Dynamic Subtitle</p>
+                </div>
+
+                <div class="px-6 py-6">
+                    <form id="leadForm" onsubmit="submitForm(event)">
+                        <input type="hidden" id="leadType" name="type">
+                        <input type="hidden" id="planInterest" name="plan">
+                        
+                        <div id="talentFields" class="hidden mb-4">
+                            <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_role">Your Trade / Specialty</label>
+                            <select class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                                <option>Plumber</option>
+                                <option>Electrician</option>
+                                <option>Mason</option>
+                                <option>Chef / Kitchen</option>
+                                <option>Cleaning</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div id="clientFields" class="hidden mb-4">
+                            <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_need">What profile are you looking to hire?</label>
+                            <input type="text" placeholder="e.g., Urgent Plumber..." class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_email">Your Email</label>
+                            <input type="email" required placeholder="name@example.com" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-brand-primary hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary transition-colors">
+                            Continue
+                        </button>
+                    </form>
+
+                    <div id="successMessage" class="hidden text-center py-4">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-slate-900" data-i18n="success_title">Received!</h3>
+                        <p class="text-sm text-slate-500 mt-2" data-i18n="success_desc">We have sent the next steps to your email.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- TRANSLATIONS CONFIG ---
+        const translations = {
+            en: {
+                nav_how: "Our Standard",
+                nav_pro: "For Talent",
+                nav_hire: "Find Talent",
+                hero_title_1: "The End of",
+                hero_title_2: "Blind Hiring",
+                hero_subtitle: "Don't play Russian Roulette with your hiring. We connect demanding clients with technicians who have passed <strong>real physical exams</strong> and <strong>criminal background checks</strong>.",
+                card_client_title: "I Need Verified Talent",
+                card_client_desc: "Stop risking your assets. Access our database of vetted professionals.",
+                card_client_cta: "View Safe Profiles",
+                card_talent_title: "I am an Expert Pro",
+                card_talent_desc: "Tired of competing with amateurs? Prove your skills and charge what you're worth.",
+                card_talent_cta: "Get Certified Now",
+                process_title: "The \"Iron-Clad\" Validation Standard",
+                step1_title: "1. Workshop Stress Test",
+                step1_desc: "CVs lie. Hands don't. Candidates must fix real breakdowns in our testing labs.",
+                step2_title: "2. 360° Background Scan",
+                step2_desc: "We check criminal records, judicial history, and drug screenings. No exceptions.",
+                step3_title: "3. The Elite 20% Badge",
+                step3_desc: "Only the top 20% survive our filter. If they are on Nexyana, they are the best.",
+                client_tag: "Choose your Peace of Mind",
+                client_title: "Solutions for every risk level",
+                tab_home: "Households",
+                tab_sme: "SMBs",
+                tab_corp: "Corporates",
+                home_badge: "FAMILY SAFETY",
+                home_head: "Who enters your home?",
+                home_desc: "Would you give your house keys to a stranger? 65% of informal services end in theft or bad repairs. Don't risk it.",
+                home_btn: "Book Safe Technician ($49)",
+                home_profile: "Certified Plumber • Gold Level",
+                tag_background: "Background OK",
+                tag_exam: "Tech Exam 98/100",
+                sme_badge: "PROFIT PROTECTION",
+                sme_head: "Cheap labor is expensive.",
+                sme_desc: "A broken machine costs you $500/hour. An incompetent technician costs you clients. Hire someone who fixes it the first time.",
+                sme_btn: "Start SMB Plan ($129/mo)",
+                sme_stat: "Reduction in staff turnover in certified SMBs.",
+                corp_badge: "SCALE & COMPLIANCE",
+                corp_head: "Mass Hiring, Zero Headache.",
+                corp_desc: "Need 50 techs in 3 cities by Monday? We have the pre-vetted pool. Integration with your ATS included.",
+                corp_btn: "Book Strategy Call",
+                corp_dash: "Corporate Dashboard",
+                dash_active: "Active Techs",
+                dash_trust: "Trust Index",
+                talent_tag: "For The Professional",
+                talent_head_1: "Stop competing on price.",
+                talent_head_2: "Get paid for your quality.",
+                talent_desc: "Amateurs charge cheap and ruin the market. You are an expert. Prove it. Our badge separates you from the crowd and gets you clients who value skill over savings.",
+                feat1_title: "The \"Elite\" Badge",
+                feat1_desc: "A physical and digital seal that instantly builds trust with homeowners and CEOs.",
+                feat2_title: "Premium Rates",
+                feat2_desc: "Our certified pros earn 35% more because they offer zero risk to the client.",
+                talent_btn: "Claim My Badge ($20)",
+                cert_title: "Competence Certificate",
+                cert_spec: "Specialty",
+                cert_score: "Technical Score",
+                cert_bg: "Background",
+                footer_tag: "The new standard of trust.",
+                form_role: "Your Trade / Specialty",
+                form_need: "What profile are you looking to hire?",
+                form_email: "Your Email",
+                success_title: "Received!",
+                success_desc: "We have sent the next steps to your email.",
+                modal_talent_title: "Reserve your exam date",
+                modal_talent_subtitle: "We are opening spots for technical certification in your area.",
+                modal_client_title: "You are one step away from hiring safely",
+                modal_client_subtitle: "Secure your preferential rate.",
+                btn_continue: "Continue"
+            },
+            es: {
+                nav_how: "Nuestro Estándar",
+                nav_pro: "Para Talento",
+                nav_hire: "Buscar Talento",
+                hero_title_1: "El Fin de la",
+                hero_title_2: "Contratación a Ciegas",
+                hero_subtitle: "No juegues a la Ruleta Rusa. Conectamos clientes exigentes con técnicos que han aprobado <strong>exámenes físicos reales</strong> y <strong>chequeos penales</strong>.",
+                card_client_title: "Necesito Talento Verificado",
+                card_client_desc: "Deja de arriesgar tu patrimonio. Accede a nuestra base de profesionales filtrados.",
+                card_client_cta: "Ver Perfiles Seguros",
+                card_talent_title: "Soy un Experto",
+                card_talent_desc: "¿Cansado de competir con novatos baratos? Demuestra tu nivel y cobra lo justo.",
+                card_talent_cta: "Certificarme Ahora",
+                process_title: "El Estándar de Validación \"Blindado\"",
+                step1_title: "1. Prueba de Fuego en Taller",
+                step1_desc: "El papel aguanta todo. Las manos no. Los candidatos deben reparar averías reales en nuestros laboratorios.",
+                step2_title: "2. Escaneo de Antecedentes 360°",
+                step2_desc: "Revisamos historial penal, judicial y antidoping. Sin excepciones.",
+                step3_title: "3. La Insignia del 20%",
+                step3_desc: "Solo el Top 20% sobrevive al filtro. Si están en Nexyana, son los mejores.",
+                client_tag: "Elige tu Tranquilidad",
+                client_title: "Soluciones para cada nivel de riesgo",
+                tab_home: "Hogares",
+                tab_sme: "PYMEs",
+                tab_corp: "Corporativos",
+                home_badge: "SEGURIDAD FAMILIAR",
+                home_head: "¿Quién entra a tu casa?",
+                home_desc: "¿Le darías las llaves de tu casa a un extraño? El 65% de los servicios informales terminan en robos o malas reparaciones. No te arriesgues.",
+                home_btn: "Pedir Técnico Seguro ($49)",
+                home_profile: "Plomero Certificado • Nivel Oro",
+                tag_background: "Antecedentes OK",
+                tag_exam: "Examen Técnico 98/100",
+                sme_badge: "PROTECCIÓN DE UTILIDADES",
+                sme_head: "Lo barato sale caro.",
+                sme_desc: "Una máquina parada te cuesta $500/hora. Un técnico incompetente te cuesta clientes. Contrata a quien lo arregla a la primera.",
+                sme_btn: "Plan PYME ($129/mes)",
+                sme_stat: "Reducción en rotación de personal técnico en PYMEs certificadas.",
+                corp_badge: "ESCALA Y CUMPLIMIENTO",
+                corp_head: "Contratación Masiva, Cero Dolor.",
+                corp_desc: "¿Necesitas 50 técnicos para el lunes? Tenemos el pool pre-validado. Integración con tu ATS incluida.",
+                corp_btn: "Agendar Estrategia",
+                corp_dash: "Dashboard Corporativo",
+                dash_active: "Técnicos Activos",
+                dash_trust: "Índice de Confianza",
+                talent_tag: "Para El Profesional",
+                talent_head_1: "Deja de competir por precio.",
+                talent_head_2: "Cobra por tu calidad.",
+                talent_desc: "Los amateurs cobran barato y arruinan el mercado. Tú eres un experto. Demuéstralo. Nuestra insignia te separa del montón y te consigue clientes que valoran la calidad.",
+                feat1_title: "La Insignia \"Elite\"",
+                feat1_desc: "Un sello físico y digital que genera confianza instantánea con dueños de casa y gerentes.",
+                feat2_title: "Tarifas Premium",
+                feat2_desc: "Nuestros pros certificados ganan un 35% más porque ofrecen cero riesgo al cliente.",
+                talent_btn: "Reclamar mi Insignia ($20)",
+                cert_title: "Certificado de Competencia",
+                cert_spec: "Especialidad",
+                cert_score: "Puntaje Técnico",
+                cert_bg: "Antecedentes",
+                footer_tag: "El nuevo estándar de confianza.",
+                form_role: "Tu Oficio / Especialidad",
+                form_need: "¿Qué perfil buscas contratar?",
+                form_email: "Tu Correo Electrónico",
+                success_title: "¡Recibido!",
+                success_desc: "Te hemos enviado los siguientes pasos a tu correo.",
+                modal_talent_title: "Reserva tu fecha de examen",
+                modal_talent_subtitle: "Estamos abriendo cupos para certificación técnica en tu zona.",
+                modal_client_title: "Estás a un paso de contratar seguro",
+                modal_client_subtitle: "Asegura tu tarifa preferencial.",
+                btn_continue: "Continuar"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Update Buttons Style
+            document.getElementById('btn-en').className = lang === 'en' 
+                ? 'px-3 py-1 text-xs font-bold rounded-md transition-colors bg-white text-brand-primary shadow-sm'
+                : 'px-3 py-1 text-xs font-bold rounded-md transition-colors text-slate-500 hover:text-slate-700';
+                
+            document.getElementById('btn-es').className = lang === 'es' 
+                ? 'px-3 py-1 text-xs font-bold rounded-md transition-colors bg-white text-brand-primary shadow-sm'
+                : 'px-3 py-1 text-xs font-bold rounded-md transition-colors text-slate-500 hover:text-slate-700';
+
+            // Update Text Nodes
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    // Check if content has HTML tags
+                    if (translations[lang][key].includes('<')) {
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.innerText = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update Modal Button if exists
+            const btn = document.getElementById('submitBtn');
+            if(btn) btn.innerText = translations[lang]['btn_continue'];
+        }
+
+        // --- REAL TIME NOTIFICATIONS (Mock Data: Ecuador) ---
+        const notifications = [
+            { name: "Juan P.", role_en: "Plumber", role_es: "Plomero", city: "Quito" },
+            { name: "Maria S.", role_en: "Chef", role_es: "Chef", city: "Guayaquil" },
+            { name: "Luis R.", role_en: "Electrician", role_es: "Electricista", city: "Cuenca" },
+            { name: "Ana M.", role_en: "Registered", role_es: "Registró", city: "Manta" },
+            { name: "Pedro C.", role_en: "Mason", role_es: "Albañil", city: "Ambato" },
+            { name: "Sofia L.", role_en: "Contracted", role_es: "Contrató", city: "Quito" }
+        ];
+
+        function showNotification() {
+            const toast = document.getElementById('toast');
+            const title = document.getElementById('toast-title');
+            const body = document.getElementById('toast-body');
+
+            // Pick random data
+            const random = notifications[Math.floor(Math.random() * notifications.length)];
+            
+            // Set content based on current lang
+            const role = currentLang === 'en' ? random.role_en : random.role_es;
+            const action = currentLang === 'en' ? "Active in" : "Activo en";
+            
+            title.innerText = currentLang === 'en' ? "New Activity" : "Nueva Actividad";
+            body.innerText = `${random.name} - ${role} (${action} ${random.city})`;
+
+            // Show
+            toast.classList.remove('hidden', 'translate-y-full');
+            
+            // Hide after 4 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-y-full');
+            }, 4000);
+        }
+
+        // Start notification loop
+        setTimeout(() => {
+            showNotification(); // First one after 2s
+            setInterval(showNotification, 8000); // Then every 8s
+        }, 2000);
+
+        // --- TAB LOGIC ---
+        function switchTab(tabName) {
+            ['hogar', 'pyme', 'corp'].forEach(t => {
+                document.getElementById(`content-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).classList.remove('tab-active');
+                document.getElementById(`tab-${t}`).classList.add('tab-inactive');
+            });
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            const activeTab = document.getElementById(`tab-${tabName}`);
+            activeTab.classList.remove('tab-inactive');
+            activeTab.classList.add('tab-active');
+        }
+
+        // --- SCROLL LOGIC ---
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('validationModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSubtitle = document.getElementById('modalSubtitle');
+        const talentFields = document.getElementById('talentFields');
+        const clientFields = document.getElementById('clientFields');
+        const leadTypeInput = document.getElementById('leadType');
+        const planInput = document.getElementById('planInterest');
+        const form = document.getElementById('leadForm');
+        const successMsg = document.getElementById('successMessage');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function openModal(type, planName) {
+            form.classList.remove('hidden');
+            successMsg.classList.add('hidden');
+            form.reset();
+            leadTypeInput.value = type;
+            planInput.value = planName;
+
+            if (type === 'talent') {
+                modalTitle.innerText = translations[currentLang]['modal_talent_title'];
+                modalSubtitle.innerText = translations[currentLang]['modal_talent_subtitle'];
+                talentFields.classList.remove('hidden');
+                clientFields.classList.add('hidden');
+            } else {
+                modalTitle.innerText = translations[currentLang]['modal_client_title'];
+                modalSubtitle.innerText = `${translations[currentLang]['modal_client_subtitle']} (${planName})`;
+                talentFields.classList.add('hidden');
+                clientFields.classList.remove('hidden');
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        function submitForm(e) {
+            e.preventDefault();
+            submitBtn.disabled = true;
+            submitBtn.innerText = "...";
+            setTimeout(() => {
+                form.classList.add('hidden');
+                successMsg.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.innerText = translations[currentLang]['btn_continue'];
+            }, 1000);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
