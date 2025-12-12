@@ -94,8 +94,8 @@
                     <a href="#/" onclick="navigate('#/'); return false;" class="font-bold text-xl tracking-tight text-brand-dark">Nexyana</a>
                 </div>
                 
-                <!-- Desktop Menu -->
-                <div class="flex items-center gap-4">
+                <!-- Menu -->
+                <div class="flex items-center gap-3">
                     <!-- Language Switcher -->
                     <div class="flex items-center bg-slate-100 rounded-lg p-1 mr-2 md:mr-4">
                         <button onclick="setLanguage('en')" id="btn-en" class="px-3 py-1 text-xs font-bold rounded-md transition-colors bg-white text-brand-primary shadow-sm">EN</button>
@@ -108,6 +108,26 @@
                         <a href="#/talento" onclick="navigate('#/talento'); return false;" class="text-sm font-semibold text-slate-700 hover:text-brand-dark" data-i18n="nav_talent">Soy Talento</a>
                         <a href="#/panel" id="nav-panel" onclick="navigate('#/panel'); return false;" class="hidden bg-white border border-slate-300 text-slate-800 px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-50 transition" data-i18n="nav_panel">Mi Panel</a>
                         <a href="#/db" onclick="navigate('#/db'); return false;" class="bg-brand-dark text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20" data-i18n="nav_cta">Ver Base</a>
+                    </div>
+
+                    <!-- Mobile hamburger -->
+                    <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50" aria-label="Menu" aria-expanded="false">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Panel -->
+            <div id="mobileMenu" class="md:hidden hidden pb-4">
+                <div class="mt-3 bg-white border border-slate-200 rounded-2xl p-3 shadow-sm">
+                    <div class="grid grid-cols-1 gap-2">
+                        <a href="#/empresas" onclick="navigate('#/empresas'); closeMobileMenu(); return false;" class="px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 font-semibold text-slate-800" data-i18n="nav_companies">Para Empresas</a>
+                        <a href="#/hogares" onclick="navigate('#/hogares'); closeMobileMenu(); return false;" class="px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 font-semibold text-slate-800" data-i18n="nav_homes">Para Hogares</a>
+                        <a href="#/talento" onclick="navigate('#/talento'); closeMobileMenu(); return false;" class="px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 font-semibold text-slate-800" data-i18n="nav_talent">Soy Talento</a>
+                        <a href="#/panel" onclick="navigate('#/panel'); closeMobileMenu(); return false;" class="px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 font-semibold text-slate-800" data-i18n="nav_panel">Mi Panel</a>
+                        <a href="#/db" onclick="navigate('#/db'); closeMobileMenu(); return false;" class="px-4 py-3 rounded-xl bg-slate-900 text-white font-extrabold" data-i18n="nav_cta">Ver Base</a>
                     </div>
                 </div>
             </div>
@@ -436,11 +456,28 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-6">
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-6">
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <div class="inline-flex rounded-lg border border-slate-300 bg-white p-1 w-full sm:w-auto">
+                                    <button id="dbViewListBtn" onclick="setDbView('list')" class="px-3 py-2 text-sm font-bold rounded-md bg-slate-900 text-white" data-i18n="db_view_list">Lista</button>
+                                    <button id="dbViewMapBtn" onclick="setDbView('map')" class="px-3 py-2 text-sm font-bold rounded-md text-slate-700 hover:bg-slate-50" data-i18n="db_view_map">Mapa</button>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <label class="text-sm font-medium text-slate-700 whitespace-nowrap" data-i18n="db_segment_label">Segmento</label>
+                                    <select id="dbDemandSegment" class="w-full sm:w-auto border-slate-300 rounded-md shadow-sm p-2.5 border focus:ring-brand-primary focus:border-brand-primary" onchange="renderDbMap()">
+                                        <option value="home" data-i18n="seg_particular">Particular</option>
+                                        <option value="sme" data-i18n="seg_sme">PYME</option>
+                                        <option value="corp" data-i18n="seg_corp">Corporativo</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="flex flex-col sm:flex-row gap-2">
                                 <button id="geoBtn" onclick="requestGeo()" class="px-4 py-2 rounded-lg bg-white border border-slate-300 text-slate-800 font-semibold hover:bg-slate-50" data-i18n="db_geo_btn">Usar mi ubicación (opcional)</button>
                                 <button id="geoClearBtn" onclick="clearGeo()" class="px-4 py-2 rounded-lg bg-white border border-slate-300 text-slate-800 font-semibold hover:bg-slate-50" data-i18n="db_geo_clear">Olvidar ubicación</button>
                             </div>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-6">
                             <p class="text-xs text-slate-500" data-i18n="db_geo_note">Funciona en HTTPS o localhost. Se guarda solo en tu navegador.</p>
                         </div>
 
@@ -456,8 +493,50 @@
                                 </div>
                             </div>
 
-                            <div id="dbResults" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <!-- rendered by JS -->
+                            <!-- LIST VIEW -->
+                            <div id="dbListView">
+                                <div id="dbResults" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- rendered by JS -->
+                                </div>
+                            </div>
+
+                            <!-- MAP VIEW -->
+                            <div id="dbMapView" class="hidden">
+                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                                    <div class="lg:col-span-2">
+                                        <div class="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden">
+                                            <div class="flex items-center justify-between px-4 py-3 bg-white border-b border-slate-200">
+                                                <div>
+                                                    <div class="text-xs font-bold tracking-wider text-brand-primary uppercase" data-i18n="db_map_tag">Mapa (Demo)</div>
+                                                    <div class="text-sm font-extrabold text-slate-900" data-i18n="db_map_title">Disponibilidad + demanda por segmento</div>
+                                                </div>
+                                                <div class="text-xs text-slate-500" data-i18n="db_map_hint">Toca un pin para ver detalles</div>
+                                            </div>
+                                            <div class="relative w-full aspect-[16/10] sm:aspect-[16/9] bg-gradient-to-b from-slate-100 to-slate-50">
+                                                <div id="dbMapCanvas" class="absolute inset-0">
+                                                    <!-- rendered by JS (SVG) -->
+                                                </div>
+                                            </div>
+                                            <div class="px-4 py-3 bg-white border-t border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
+                                                <div class="flex items-center gap-3">
+                                                    <span class="inline-flex items-center gap-1"><span class="inline-block h-2 w-2 rounded-full bg-brand-primary"></span><span data-i18n="db_map_legend_supply">Talento</span></span>
+                                                    <span class="inline-flex items-center gap-1"><span class="inline-block h-2 w-2 rounded-full bg-brand-gold"></span><span data-i18n="db_map_legend_demand">Demanda</span></span>
+                                                    <span class="inline-flex items-center gap-1"><span class="inline-block h-2 w-2 rounded-full bg-slate-900"></span><span data-i18n="db_map_legend_you">Tú</span></span>
+                                                </div>
+                                                <div class="text-slate-500" id="dbMapStats">—</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white border border-slate-200 rounded-2xl p-4">
+                                        <div class="text-sm font-extrabold text-slate-900" data-i18n="db_map_detail_title">Detalle</div>
+                                        <p class="text-xs text-slate-500 mt-1" data-i18n="db_map_detail_desc">Selecciona un punto del mapa.</p>
+                                        <div id="dbMapDetail" class="mt-4">
+                                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-600" data-i18n="db_map_detail_empty">
+                                                Ningún punto seleccionado.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -747,6 +826,19 @@
                 db_geo_btn: "Use my location (optional)",
                 db_geo_clear: "Forget location",
                 db_geo_note: "Works on HTTPS or localhost. Stored only in your browser.",
+                db_view_list: "List",
+                db_view_map: "Map",
+                db_segment_label: "Segment",
+                seg_particular: "Individual",
+                db_map_tag: "Map (Demo)",
+                db_map_title: "Availability + demand by segment",
+                db_map_hint: "Tap a pin to see details",
+                db_map_legend_supply: "Supply",
+                db_map_legend_demand: "Demand",
+                db_map_legend_you: "You",
+                db_map_detail_title: "Details",
+                db_map_detail_desc: "Select a point on the map.",
+                db_map_detail_empty: "No point selected.",
                 db_locked_title: "Contact details are protected",
                 db_locked_desc: "Unlock to view contact + trust evidence (mock).",
                 db_locked_cta: "Unlock now",
@@ -872,6 +964,19 @@
                 db_geo_btn: "Usar mi ubicación (opcional)",
                 db_geo_clear: "Olvidar ubicación",
                 db_geo_note: "Funciona en HTTPS o localhost. Se guarda solo en tu navegador.",
+                db_view_list: "Lista",
+                db_view_map: "Mapa",
+                db_segment_label: "Segmento",
+                seg_particular: "Particular",
+                db_map_tag: "Mapa (Demo)",
+                db_map_title: "Disponibilidad + demanda por segmento",
+                db_map_hint: "Toca un pin para ver detalles",
+                db_map_legend_supply: "Talento",
+                db_map_legend_demand: "Demanda",
+                db_map_legend_you: "Tú",
+                db_map_detail_title: "Detalle",
+                db_map_detail_desc: "Selecciona un punto del mapa.",
+                db_map_detail_empty: "Ningún punto seleccionado.",
                 db_locked_title: "Datos protegidos",
                 db_locked_desc: "Desbloquea para ver contacto + evidencia (mock).",
                 db_locked_cta: "Desbloquear ahora",
@@ -1009,6 +1114,24 @@
         // --- HASH ROUTING (GitHub Pages friendly) ---
         function navigate(hash) {
             window.location.hash = hash;
+        }
+
+        // --- MOBILE MENU ---
+        function toggleMobileMenu() {
+            const panel = document.getElementById('mobileMenu');
+            const btn = document.getElementById('mobileMenuBtn');
+            if (!panel || !btn) return;
+            const isHidden = panel.classList.contains('hidden');
+            panel.classList.toggle('hidden', !isHidden);
+            btn.setAttribute('aria-expanded', String(isHidden));
+        }
+
+        function closeMobileMenu() {
+            const panel = document.getElementById('mobileMenu');
+            const btn = document.getElementById('mobileMenuBtn');
+            if (!panel || !btn) return;
+            panel.classList.add('hidden');
+            btn.setAttribute('aria-expanded', 'false');
         }
 
         // --- MODAL LOGIC ---
@@ -1229,6 +1352,25 @@
         // --- GEO (optional) ---
         const GEO_KEY = 'nexyana_geo_coords_v1';
         const DB_PREFILL_KEY = 'nexyana_db_prefill_v1';
+        const DB_VIEW_KEY = 'nexyana_db_view_v1';
+
+        const MAP_BOUNDS = {
+            // Rough bounding box for Quito + valleys
+            latMin: -0.30,
+            latMax: -0.14,
+            lonMin: -78.58,
+            lonMax: -78.38,
+        };
+
+        const MOCK_DEMAND = [
+            { id: 'd1', segment: 'home', label_es: 'Particulares (hogar)', label_en: 'Home (individuals)', zone: 'Norte', city: 'Quito', lat: -0.1700, lon: -78.4900, count: 18 },
+            { id: 'd2', segment: 'home', label_es: 'Particulares (hogar)', label_en: 'Home (individuals)', zone: 'Centro', city: 'Quito', lat: -0.2250, lon: -78.5200, count: 22 },
+            { id: 'd3', segment: 'home', label_es: 'Particulares (hogar)', label_en: 'Home (individuals)', zone: 'Sur', city: 'Quito', lat: -0.2750, lon: -78.5500, count: 14 },
+            { id: 'd4', segment: 'sme', label_es: 'PYMEs', label_en: 'SMBs', zone: 'Centro', city: 'Quito', lat: -0.2100, lon: -78.5050, count: 9 },
+            { id: 'd5', segment: 'sme', label_es: 'PYMEs', label_en: 'SMBs', zone: 'Norte', city: 'Quito', lat: -0.1550, lon: -78.4750, count: 7 },
+            { id: 'd6', segment: 'corp', label_es: 'Corporativo', label_en: 'Corporate', zone: 'Valles', city: 'Cumbayá', lat: -0.1996, lon: -78.4334, count: 4 },
+            { id: 'd7', segment: 'corp', label_es: 'Corporativo', label_en: 'Corporate', zone: 'Valles', city: 'Tumbaco', lat: -0.2150, lon: -78.4109, count: 3 },
+        ];
 
         function loadGeo() {
             try {
@@ -1278,6 +1420,252 @@
                 Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                 Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
             return 2 * R * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
+        }
+
+        function clamp(n, min, max) {
+            return Math.max(min, Math.min(max, n));
+        }
+
+        function latLonToXY(lat, lon) {
+            const x = (lon - MAP_BOUNDS.lonMin) / (MAP_BOUNDS.lonMax - MAP_BOUNDS.lonMin);
+            const y = (MAP_BOUNDS.latMax - lat) / (MAP_BOUNDS.latMax - MAP_BOUNDS.latMin);
+            return {
+                x: clamp(x, 0, 1),
+                y: clamp(y, 0, 1),
+            };
+        }
+
+        function setDbView(mode) {
+            try { localStorage.setItem(DB_VIEW_KEY, mode); } catch (e) {}
+            const listBtn = document.getElementById('dbViewListBtn');
+            const mapBtn = document.getElementById('dbViewMapBtn');
+            const listView = document.getElementById('dbListView');
+            const mapView = document.getElementById('dbMapView');
+            if (!listBtn || !mapBtn || !listView || !mapView) return;
+
+            const isMap = mode === 'map';
+            listView.classList.toggle('hidden', isMap);
+            mapView.classList.toggle('hidden', !isMap);
+
+            listBtn.className = isMap
+                ? 'px-3 py-2 text-sm font-bold rounded-md text-slate-700 hover:bg-slate-50'
+                : 'px-3 py-2 text-sm font-bold rounded-md bg-slate-900 text-white';
+            mapBtn.className = isMap
+                ? 'px-3 py-2 text-sm font-bold rounded-md bg-slate-900 text-white'
+                : 'px-3 py-2 text-sm font-bold rounded-md text-slate-700 hover:bg-slate-50';
+
+            if (isMap) renderDbMap();
+            else renderDb();
+        }
+
+        function getDbView() {
+            try {
+                return localStorage.getItem(DB_VIEW_KEY) || 'list';
+            } catch (e) {
+                return 'list';
+            }
+        }
+
+        function renderDbMap() {
+            const canvas = document.getElementById('dbMapCanvas');
+            const detail = document.getElementById('dbMapDetail');
+            const stats = document.getElementById('dbMapStats');
+            if (!canvas || !detail) return;
+
+            const trade = (document.getElementById('dbFilterTrade')?.value || 'all');
+            const city = (document.getElementById('dbFilterCity')?.value || '').trim().toLowerCase();
+            const zone = (document.getElementById('dbFilterZone')?.value || 'any');
+            const trust = (document.getElementById('dbFilterTrust')?.value || 'any');
+            const segment = (document.getElementById('dbDemandSegment')?.value || 'home');
+
+            const unlocked = isUnlocked();
+            const geo = loadGeo();
+
+            const filteredSupply = MOCK_TALENT.filter(p => {
+                if (trade !== 'all' && p.trade !== trade) return false;
+                if (city && !p.city.toLowerCase().includes(city)) return false;
+                if (zone !== 'any' && (p.zone || '') !== zone) return false;
+                if (trust === 'bg_ok' && !p.bg) return false;
+                if (trust === 'score_90' && p.score < 90) return false;
+                if (trust === 'verified' && !p.verified) return false;
+                return true;
+            });
+
+            const demandPins = MOCK_DEMAND.filter(d => {
+                if (d.segment !== segment) return false;
+                if (city && !d.city.toLowerCase().includes(city)) return false;
+                if (zone !== 'any' && (d.zone || '') !== zone) return false;
+                return true;
+            });
+
+            const supplyCount = filteredSupply.length;
+            const demandCount = demandPins.reduce((acc, d) => acc + d.count, 0);
+            if (stats) {
+                stats.innerText = currentLang === 'en'
+                    ? `${supplyCount} pros • ${demandCount} demand (mock)`
+                    : `${supplyCount} pros • ${demandCount} demanda (mock)`;
+            }
+
+            const background = `
+                <rect x="0" y="0" width="100" height="60" fill="url(#bg)"/>
+                <path d="M8 48 C 22 40, 38 38, 55 30 C 67 25, 78 24, 92 18" fill="none" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="2 3"/>
+                <text x="6" y="12" font-size="3.2" fill="#64748b">${currentLang === 'en' ? 'Quito (mock)' : 'Quito (mock)'}</text>
+                <text x="72" y="55" font-size="3.0" fill="#94a3b8">${currentLang === 'en' ? 'Valleys' : 'Valles'}</text>
+            `;
+
+            const supplyDots = filteredSupply.map((p, idx) => {
+                const pt = latLonToXY(p.lat, p.lon);
+                const x = (pt.x * 100).toFixed(2);
+                const y = (pt.y * 60).toFixed(2);
+                const fill = p.verified ? '#0f766e' : '#14b8a6';
+                const stroke = '#0f172a';
+                const title = `${p.first} ${p.last} (${p.trade})`;
+                return `
+                    <g class="cursor-pointer" onclick="selectMapPoint('supply', ${idx})">
+                        <circle cx="${x}" cy="${y}" r="1.8" fill="${fill}" stroke="${stroke}" stroke-width="0.3"></circle>
+                        <title>${title}</title>
+                    </g>
+                `;
+            }).join('');
+
+            const demandDots = demandPins.map((d, idx) => {
+                const pt = latLonToXY(d.lat, d.lon);
+                const x = (pt.x * 100).toFixed(2);
+                const y = (pt.y * 60).toFixed(2);
+                const fill = '#d97706';
+                const stroke = '#0f172a';
+                const title = `${currentLang === 'en' ? d.label_en : d.label_es} • ${d.count}`;
+                return `
+                    <g class="cursor-pointer" onclick="selectMapPoint('demand', ${idx})">
+                        <circle cx="${x}" cy="${y}" r="${clamp(1.6 + d.count * 0.05, 1.8, 3.0)}" fill="${fill}" stroke="${stroke}" stroke-width="0.3" opacity="0.9"></circle>
+                        <title>${title}</title>
+                    </g>
+                `;
+            }).join('');
+
+            const youDot = geo
+                ? (() => {
+                    const pt = latLonToXY(geo.lat, geo.lon);
+                    const x = (pt.x * 100).toFixed(2);
+                    const y = (pt.y * 60).toFixed(2);
+                    return `
+                        <g>
+                            <circle cx="${x}" cy="${y}" r="2.2" fill="#0f172a" opacity="0.95"></circle>
+                            <circle cx="${x}" cy="${y}" r="4.2" fill="none" stroke="#0f172a" stroke-width="0.35" opacity="0.25"></circle>
+                            <title>${currentLang === 'en' ? 'You' : 'Tú'}</title>
+                        </g>
+                    `;
+                })()
+                : '';
+
+            canvas.innerHTML = `
+                <svg viewBox="0 0 100 60" preserveAspectRatio="none" class="w-full h-full">
+                    <defs>
+                        <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0" stop-color="#f1f5f9"/>
+                            <stop offset="1" stop-color="#f8fafc"/>
+                        </linearGradient>
+                    </defs>
+                    ${background}
+                    ${demandDots}
+                    ${supplyDots}
+                    ${youDot}
+                </svg>
+            `;
+
+            // If nothing selected, keep an informative placeholder
+            if (!detail.dataset.selected) {
+                detail.innerHTML = `
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-600">
+                        ${translations[currentLang]['db_map_detail_empty'] || (currentLang === 'en' ? 'No point selected.' : 'Ningún punto seleccionado.')}
+                    </div>
+                `;
+            }
+
+            // store for selection handler
+            window.__nexyanaMap = {
+                supply: filteredSupply,
+                demand: demandPins,
+                unlocked,
+                geo,
+                segment,
+            };
+        }
+
+        function selectMapPoint(kind, index) {
+            const detail = document.getElementById('dbMapDetail');
+            if (!detail || !window.__nexyanaMap) return;
+            detail.dataset.selected = '1';
+
+            if (kind === 'supply') {
+                const p = window.__nexyanaMap.supply[index];
+                if (!p) return;
+                const contact = window.__nexyanaMap.unlocked ? p.contact : '••••••••••••';
+                detail.innerHTML = `
+                    <div class="bg-white border border-slate-200 rounded-xl p-4">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <div class="font-extrabold text-slate-900">${p.first} ${p.last}</div>
+                                <div class="text-xs text-slate-500">${p.trade} • ${p.city} • ${p.zone}</div>
+                            </div>
+                            <span class="text-xs px-2 py-1 rounded ${p.verified ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'} font-bold">
+                                ${p.verified ? (currentLang === 'en' ? 'VERIFIED' : 'VERIFICADO') : (currentLang === 'en' ? 'PRE-VETTED' : 'PRE-FILTRADO')}
+                            </span>
+                        </div>
+                        <div class="mt-3 grid grid-cols-3 gap-2 text-xs">
+                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2">
+                                <div class="text-slate-500">${currentLang === 'en' ? 'Score' : 'Score'}</div>
+                                <div class="font-bold text-slate-900">${p.score}/100</div>
+                            </div>
+                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2">
+                                <div class="text-slate-500">${currentLang === 'en' ? 'Level' : 'Nivel'}</div>
+                                <div class="font-bold text-slate-900">${p.level}</div>
+                            </div>
+                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2">
+                                <div class="text-slate-500">${currentLang === 'en' ? 'Background' : 'Antecedentes'}</div>
+                                <div class="font-bold text-slate-900">${p.bg ? 'OK' : (currentLang === 'en' ? 'Pending' : 'Pendiente')}</div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="text-xs text-slate-500">${currentLang === 'en' ? 'Contact' : 'Contacto'}</div>
+                            <div class="font-mono font-bold text-slate-900">${contact}</div>
+                        </div>
+                        <div class="mt-4">
+                            <button onclick="${window.__nexyanaMap.unlocked ? `showToast('${currentLang === 'en' ? 'Chat opened (mock)' : 'Chat abierto (mock)'}','${currentLang === 'en' ? 'This would be an in-app chat.' : 'Aquí iría un chat interno.'}')` : 'openCheckout()'}" class="w-full px-4 py-2 rounded-lg ${window.__nexyanaMap.unlocked ? 'bg-brand-primary text-white hover:bg-teal-800' : 'bg-slate-900 text-white hover:bg-slate-800'} font-bold">
+                                ${window.__nexyanaMap.unlocked ? (currentLang === 'en' ? 'Message' : 'Mensaje') : (currentLang === 'en' ? 'Unlock' : 'Desbloquear')}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (kind === 'demand') {
+                const d = window.__nexyanaMap.demand[index];
+                if (!d) return;
+                const label = currentLang === 'en' ? d.label_en : d.label_es;
+                detail.innerHTML = `
+                    <div class="bg-white border border-slate-200 rounded-xl p-4">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <div class="font-extrabold text-slate-900">${label}</div>
+                                <div class="text-xs text-slate-500">${d.city} • ${d.zone}</div>
+                            </div>
+                            <span class="text-xs px-2 py-1 rounded bg-amber-100 text-amber-700 font-bold">${d.count} ${currentLang === 'en' ? 'requests' : 'solicitudes'}</span>
+                        </div>
+                        <div class="mt-3 text-sm text-slate-600">
+                            ${currentLang === 'en'
+                                ? 'This pin represents simulated demand density for the selected segment.'
+                                : 'Este pin representa densidad de demanda simulada para el segmento seleccionado.'}
+                        </div>
+                        <div class="mt-4">
+                            <button onclick="openModal('client','Acceso - $49')" class="w-full px-4 py-2 rounded-lg bg-brand-dark text-white font-bold hover:bg-slate-800">
+                                ${currentLang === 'en' ? 'Get access (mock)' : 'Pedir acceso (mock)'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
         }
 
         function renderDb() {
@@ -1369,6 +1757,15 @@
                     </div>
                 `;
             }).join('');
+
+            // Keep view toggle consistent (if user switched to map)
+            const view = getDbView();
+            const listView = document.getElementById('dbListView');
+            const mapView = document.getElementById('dbMapView');
+            if (listView && mapView) {
+                listView.classList.toggle('hidden', view === 'map');
+                mapView.classList.toggle('hidden', view !== 'map');
+            }
         }
 
         // --- TALENT PANEL ---
@@ -1439,6 +1836,8 @@
             const h = window.location.hash || '#/';
             const route = h.startsWith('#/') ? h.slice(2) : '';
 
+            closeMobileMenu();
+
             showPortal(false);
             document.getElementById('portal-db')?.classList.add('hidden');
             document.getElementById('portal-panel')?.classList.add('hidden');
@@ -1471,7 +1870,9 @@
                         localStorage.setItem(DB_PREFILL_KEY, '1');
                     }
                 } catch (e) {}
+                setDbView(getDbView());
                 renderDb();
+                renderDbMap();
                 return;
             }
             if (route === 'panel') {
