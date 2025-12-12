@@ -91,7 +91,7 @@
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                         <path d="M9 12l2 2 4-4"/>
                     </svg>
-                    <span class="font-bold text-xl tracking-tight text-brand-dark">Nexyana</span>
+                    <a href="#/" onclick="navigate('#/'); return false;" class="font-bold text-xl tracking-tight text-brand-dark">Nexyana</a>
                 </div>
                 
                 <!-- Desktop Menu -->
@@ -103,10 +103,11 @@
                     </div>
 
                     <div class="hidden md:flex items-center gap-4">
-                        <a href="#proceso" class="text-sm font-medium text-slate-600 hover:text-brand-primary" data-i18n="nav_how">Our Standard</a>
-                        <div class="h-6 w-px bg-slate-300 mx-2"></div>
-                        <a href="#talento" class="text-sm font-semibold text-slate-700 hover:text-brand-dark" data-i18n="nav_pro">For Talent</a>
-                        <a href="#clientes" class="bg-brand-dark text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20" data-i18n="nav_hire">Find Talent</a>
+                        <a href="#/empresas" onclick="navigate('#/empresas'); return false;" class="text-sm font-medium text-slate-600 hover:text-brand-primary" data-i18n="nav_companies">Para Empresas</a>
+                        <a href="#/hogares" onclick="navigate('#/hogares'); return false;" class="text-sm font-medium text-slate-600 hover:text-brand-primary" data-i18n="nav_homes">Para Hogares</a>
+                        <a href="#/talento" onclick="navigate('#/talento'); return false;" class="text-sm font-semibold text-slate-700 hover:text-brand-dark" data-i18n="nav_talent">Soy Talento</a>
+                        <a href="#/panel" id="nav-panel" onclick="navigate('#/panel'); return false;" class="hidden bg-white border border-slate-300 text-slate-800 px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-50 transition" data-i18n="nav_panel">Mi Panel</a>
+                        <a href="#/db" onclick="navigate('#/db'); return false;" class="bg-brand-dark text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20" data-i18n="nav_cta">Ver Base</a>
                     </div>
                 </div>
             </div>
@@ -126,13 +127,13 @@
                 <span data-i18n="hero_title_1">The End of</span> <span class="text-brand-accent" data-i18n="hero_title_2">Blind Hiring</span>
             </h1>
             <p class="text-xl text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed" data-i18n="hero_subtitle">
-                Don't play Russian Roulette with your hiring. We connect demanding clients with technicians who have passed <strong>real physical exams</strong> and <strong>criminal background checks</strong>.
+                The first platform that audits every expert technically and morally before they enter your company or your home.
             </p>
 
             <!-- Roles -->
             <div class="flex flex-col md:flex-row justify-center gap-6 max-w-4xl mx-auto">
                 <!-- Client Card -->
-                <div class="group relative bg-white rounded-2xl p-1 text-left w-full md:w-1/2 hover:scale-[1.02] transition-transform duration-300 cursor-pointer" onclick="scrollToSection('clientes')">
+                <div class="group relative bg-white rounded-2xl p-1 text-left w-full md:w-1/2 hover:scale-[1.02] transition-transform duration-300 cursor-pointer" onclick="navigate('#/db')">
                     <div class="absolute -inset-0.5 bg-gradient-to-r from-brand-accent to-brand-primary rounded-2xl opacity-20 group-hover:opacity-100 blur transition duration-300"></div>
                     <div class="relative bg-white rounded-xl p-6 h-full flex flex-col items-start">
                         <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4">
@@ -147,7 +148,7 @@
                 </div>
 
                 <!-- Talent Card -->
-                <div class="group relative bg-slate-800 rounded-2xl p-1 text-left w-full md:w-1/2 hover:scale-[1.02] transition-transform duration-300 cursor-pointer border border-slate-700" onclick="scrollToSection('talento')">
+                <div class="group relative bg-slate-800 rounded-2xl p-1 text-left w-full md:w-1/2 hover:scale-[1.02] transition-transform duration-300 cursor-pointer border border-slate-700" onclick="navigate('#/talento')">
                     <div class="relative bg-slate-900 rounded-xl p-6 h-full flex flex-col items-start">
                         <div class="w-12 h-12 bg-slate-800 text-brand-gold rounded-lg flex items-center justify-center mb-4">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"></path></svg>
@@ -365,6 +366,164 @@
         </div>
     </section>
 
+    <!-- APP PORTALS (Static mock + localStorage) -->
+    <section id="portal" class="py-16 bg-slate-50 border-t border-slate-200 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-slate-900" data-i18n="portal_title">Portal Nexyana (Demo)</h2>
+                    <p class="text-slate-600" data-i18n="portal_subtitle">Mock estático que se siente real: recuerda tus acciones y desbloquea secciones.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <button onclick="navigate('#/db')" class="px-4 py-2 rounded-lg bg-white border border-slate-300 text-slate-800 font-semibold hover:bg-slate-50" data-i18n="portal_btn_db">Ir a la base</button>
+                    <button onclick="navigate('#/panel')" class="px-4 py-2 rounded-lg bg-white border border-slate-300 text-slate-800 font-semibold hover:bg-slate-50" data-i18n="portal_btn_panel">Ir a mi panel</button>
+                    <button onclick="resetDemo()" class="px-4 py-2 rounded-lg bg-slate-900 text-white font-semibold hover:bg-slate-800" data-i18n="portal_btn_reset">Reiniciar demo</button>
+                </div>
+            </div>
+
+            <!-- CLIENT: DATABASE -->
+            <div id="portal-db" class="hidden">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-6 md:p-8 border-b border-slate-200">
+                        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                            <div>
+                                <div class="text-xs font-bold tracking-wider text-brand-primary uppercase" data-i18n="db_tag">Base de Datos Nexyana</div>
+                                <h3 class="text-2xl font-extrabold text-slate-900" data-i18n="db_title">Talento verificado con señales de confianza</h3>
+                                <p class="text-slate-600 mt-1" data-i18n="db_desc">Filtra y previsualiza perfiles. El contacto se oculta hasta desbloquear.</p>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <button id="dbUnlockBtn" onclick="openCheckout()" class="px-5 py-3 rounded-lg bg-brand-dark text-white font-bold hover:bg-slate-800 shadow-lg shadow-slate-900/10" data-i18n="db_unlock_btn">Desbloquear Acceso ($49)</button>
+                                <button onclick="scrollToSection('clientes')" class="px-5 py-3 rounded-lg bg-white border border-slate-300 text-slate-800 font-bold hover:bg-slate-50" data-i18n="db_back_btn">Ver planes</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 md:p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="db_filter_trade">Oficio</label>
+                                <select id="dbFilterTrade" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary" onchange="renderDb()">
+                                    <option value="all" data-i18n="db_filter_all">Todos</option>
+                                    <option value="Plumber">Plumber</option>
+                                    <option value="Electrician">Electrician</option>
+                                    <option value="Carpenter">Carpenter</option>
+                                    <option value="Dishwasher">Dishwasher</option>
+                                    <option value="Cleaning">Cleaning</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="db_filter_city">Ciudad</label>
+                                <input id="dbFilterCity" type="text" placeholder="Quito" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary" oninput="renderDb()">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="db_filter_zone">Zona</label>
+                                <select id="dbFilterZone" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary" onchange="renderDb()">
+                                    <option value="any" data-i18n="db_zone_any">Cualquiera</option>
+                                    <option value="Norte" data-i18n="db_zone_north">Quito Norte</option>
+                                    <option value="Centro" data-i18n="db_zone_center">Quito Centro</option>
+                                    <option value="Sur" data-i18n="db_zone_south">Quito Sur</option>
+                                    <option value="Valles" data-i18n="db_zone_valleys">Valles (Cumbayá/Tumbaco)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="db_filter_trust">Filtros de confianza</label>
+                                <select id="dbFilterTrust" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary" onchange="renderDb()">
+                                    <option value="any" data-i18n="db_trust_any">Cualquiera</option>
+                                    <option value="bg_ok" data-i18n="db_trust_bg">Antecedentes verificados</option>
+                                    <option value="score_90" data-i18n="db_trust_score">Score 90+</option>
+                                    <option value="verified" data-i18n="db_trust_verified">Verificado por Nexyana</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-6">
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <button id="geoBtn" onclick="requestGeo()" class="px-4 py-2 rounded-lg bg-white border border-slate-300 text-slate-800 font-semibold hover:bg-slate-50" data-i18n="db_geo_btn">Usar mi ubicación (opcional)</button>
+                                <button id="geoClearBtn" onclick="clearGeo()" class="px-4 py-2 rounded-lg bg-white border border-slate-300 text-slate-800 font-semibold hover:bg-slate-50" data-i18n="db_geo_clear">Olvidar ubicación</button>
+                            </div>
+                            <p class="text-xs text-slate-500" data-i18n="db_geo_note">Funciona en HTTPS o localhost. Se guarda solo en tu navegador.</p>
+                        </div>
+
+                        <div class="relative">
+                            <div id="dbLockedOverlay" class="hidden absolute inset-0 z-10 bg-white/70 backdrop-blur-sm rounded-2xl border border-slate-200 flex items-center justify-center p-6">
+                                <div class="max-w-md text-center">
+                                    <div class="mx-auto h-12 w-12 rounded-full bg-slate-900 text-white flex items-center justify-center mb-3">
+                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-.895 3-2s-1.343-2-3-2-3 .895-3 2 1.343 2 3 2z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11h14v10H5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11V8a5 5 0 0110 0v3"/></svg>
+                                    </div>
+                                    <h4 class="text-lg font-extrabold text-slate-900" data-i18n="db_locked_title">Datos protegidos</h4>
+                                    <p class="text-sm text-slate-600 mt-1" data-i18n="db_locked_desc">Desbloquea para ver contacto + evidencia (mock para demo MVP).</p>
+                                    <button onclick="openCheckout()" class="mt-4 px-5 py-3 rounded-lg bg-brand-primary text-white font-bold hover:bg-teal-800 shadow-lg shadow-teal-900/20" data-i18n="db_locked_cta">Desbloquear ahora</button>
+                                </div>
+                            </div>
+
+                            <div id="dbResults" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- rendered by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TALENT: DASHBOARD -->
+            <div id="portal-panel" class="hidden">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-6 md:p-8 border-b border-slate-200">
+                        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                            <div>
+                                <div class="text-xs font-bold tracking-wider text-brand-primary uppercase" data-i18n="panel_tag">Portal de Talento</div>
+                                <h3 class="text-2xl font-extrabold text-slate-900" data-i18n="panel_title">Tu ruta de verificación</h3>
+                                <p class="text-slate-600 mt-1" data-i18n="panel_desc">Dashboard simple (mock) que cambia a medida que avanzas.</p>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <button onclick="simulateTalentAdvance()" class="px-4 py-2 rounded-lg bg-white border border-slate-300 text-slate-800 font-semibold hover:bg-slate-50" data-i18n="panel_btn_advance">Avanzar paso (demo)</button>
+                                <button onclick="navigate('#/db')" class="px-4 py-2 rounded-lg bg-brand-dark text-white font-semibold hover:bg-slate-800" data-i18n="panel_btn_db">Ver base</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 md:p-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="lg:col-span-2">
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between text-sm text-slate-600">
+                                        <span data-i18n="panel_progress">Progreso</span>
+                                        <span class="font-bold text-slate-800" id="talentProgressLabel">0%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-200 rounded-full h-2 mt-2">
+                                        <div id="talentProgressBar" class="bg-brand-primary h-2 rounded-full" style="width: 0%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3" id="talentSteps">
+                                    <!-- rendered by JS -->
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+                                <h4 class="font-extrabold text-slate-900" data-i18n="panel_card_title">Tu ID Nexyana</h4>
+                                <p class="text-sm text-slate-600 mt-1" data-i18n="panel_card_desc">Muestra este QR en el centro de examen (mock).</p>
+                                <div class="mt-4 bg-white border border-slate-200 rounded-xl p-4">
+                                    <div class="text-xs text-slate-500 font-mono">ID</div>
+                                    <div class="text-lg font-extrabold text-slate-900 font-mono tracking-wider" id="talentId">NEX-0000</div>
+                                    <div class="mt-3 grid grid-cols-8 gap-1" aria-hidden="true">
+                                        <div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div><div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div><div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div><div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div>
+                                        <div class="h-2 bg-slate-200"></div><div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div><div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div><div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div><div class="h-2 bg-slate-900"></div>
+                                        <div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div><div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div><div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div><div class="h-2 bg-slate-900"></div><div class="h-2 bg-slate-200"></div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 text-xs text-slate-500">
+                                    <button onclick="openModal('talent', 'Examen de Certificación - $20')" class="underline text-brand-primary font-bold" data-i18n="panel_card_cta">Actualizar mi perfil</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 pt-12 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
@@ -414,26 +573,65 @@
                         <input type="hidden" id="leadType" name="type">
                         <input type="hidden" id="planInterest" name="plan">
                         
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                            <div class="md:col-span-1">
+                                <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_name">Full name</label>
+                                <input id="leadName" type="text" placeholder="Juan Pérez" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                            </div>
+                            <div class="md:col-span-1">
+                                <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_phone">WhatsApp (optional)</label>
+                                <input id="leadPhone" type="tel" placeholder="+593 99 999 9999" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                            </div>
+                        </div>
+                        
                         <div id="talentFields" class="hidden mb-4">
                             <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_role">Your Trade / Specialty</label>
-                            <select class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
-                                <option>Plumber</option>
-                                <option>Electrician</option>
-                                <option>Mason</option>
-                                <option>Chef / Kitchen</option>
-                                <option>Cleaning</option>
-                                <option>Other</option>
+                            <select id="talentTrade" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                                <option value="Plumber">Plumber</option>
+                                <option value="Electrician">Electrician</option>
+                                <option value="Carpenter">Carpenter</option>
+                                <option value="Dishwasher">Dishwasher (Kitchen)</option>
+                                <option value="Cleaning">Cleaning</option>
+                                <option value="Other">Other</option>
                             </select>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_years">Years of experience</label>
+                                    <input id="talentYears" type="number" min="0" max="60" placeholder="5" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_city">City</label>
+                                    <input id="talentCity" type="text" placeholder="Quito" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_docs">ID / proof of address (mock)</label>
+                                <input id="talentDocs" type="file" multiple class="w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-800 hover:file:bg-slate-200">
+                            </div>
                         </div>
 
                         <div id="clientFields" class="hidden mb-4">
                             <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_need">What profile are you looking to hire?</label>
-                            <input type="text" placeholder="e.g., Urgent Plumber..." class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                            <input id="clientNeed" type="text" placeholder="e.g., Urgent Plumber..." class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_segment">Segment</label>
+                                    <select id="clientSegment" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                                        <option value="home" data-i18n="seg_home">Home</option>
+                                        <option value="sme" data-i18n="seg_sme">SMB</option>
+                                        <option value="corp" data-i18n="seg_corp">Corporate</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_city">City</label>
+                                    <input id="clientCity" type="text" placeholder="Quito" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mb-6">
                             <label class="block text-sm font-medium text-slate-700 mb-1" data-i18n="form_email">Your Email</label>
-                            <input type="email" required placeholder="name@example.com" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
+                            <input id="leadEmail" type="email" required placeholder="name@example.com" class="w-full border-slate-300 rounded-md shadow-sm p-3 border focus:ring-brand-primary focus:border-brand-primary">
                         </div>
 
                         <button type="submit" id="submitBtn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-brand-primary hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary transition-colors">
@@ -447,6 +645,9 @@
                         </div>
                         <h3 class="text-lg font-medium text-slate-900" data-i18n="success_title">Received!</h3>
                         <p class="text-sm text-slate-500 mt-2" data-i18n="success_desc">We have sent the next steps to your email.</p>
+                        <div id="successActions" class="mt-5 flex flex-col sm:flex-row gap-2 justify-center">
+                            <!-- rendered by JS -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -457,12 +658,17 @@
         // --- TRANSLATIONS CONFIG ---
         const translations = {
             en: {
+                nav_companies: "For Companies",
+                nav_homes: "For Homes",
+                nav_talent: "Join as Talent",
+                nav_panel: "My Panel",
+                nav_cta: "View Nexyana DB",
                 nav_how: "Our Standard",
                 nav_pro: "For Talent",
                 nav_hire: "Find Talent",
                 hero_title_1: "The End of",
                 hero_title_2: "Blind Hiring",
-                hero_subtitle: "Don't play Russian Roulette with your hiring. We connect demanding clients with technicians who have passed <strong>real physical exams</strong> and <strong>criminal background checks</strong>.",
+                hero_subtitle: "The first platform that audits every expert technically and morally before they enter your company or your home.",
                 card_client_title: "I Need Verified Talent",
                 card_client_desc: "Stop risking your assets. Access our database of vetted professionals.",
                 card_client_cta: "View Safe Profiles",
@@ -514,6 +720,54 @@
                 cert_score: "Technical Score",
                 cert_bg: "Background",
                 footer_tag: "The new standard of trust.",
+                portal_title: "Nexyana Portal (Demo)",
+                portal_subtitle: "This is a static mock that feels real: it remembers your actions and unlocks sections.",
+                portal_btn_db: "Go to DB",
+                portal_btn_panel: "Go to Panel",
+                portal_btn_reset: "Reset demo",
+                db_tag: "Nexyana Database",
+                db_title: "Verified talent, with trust signals",
+                db_desc: "Filter and preview profiles. Contact is hidden until you unlock.",
+                db_unlock_btn: "Unlock Access ($49)",
+                db_back_btn: "See plans",
+                db_filter_trade: "Trade",
+                db_filter_city: "City",
+                db_filter_zone: "Zone",
+                db_filter_trust: "Trust filters",
+                db_filter_all: "All",
+                db_zone_any: "Any",
+                db_zone_north: "Quito North",
+                db_zone_center: "Quito Center",
+                db_zone_south: "Quito South",
+                db_zone_valleys: "Valleys (Cumbayá/Tumbaco)",
+                db_trust_any: "Any",
+                db_trust_bg: "Background verified",
+                db_trust_score: "Score 90+",
+                db_trust_verified: "Verified by Nexyana",
+                db_geo_btn: "Use my location (optional)",
+                db_geo_clear: "Forget location",
+                db_geo_note: "Works on HTTPS or localhost. Stored only in your browser.",
+                db_locked_title: "Contact details are protected",
+                db_locked_desc: "Unlock to view contact + trust evidence (mock).",
+                db_locked_cta: "Unlock now",
+                panel_tag: "Talent Portal",
+                panel_title: "Your verification journey",
+                panel_desc: "A simple progress dashboard (static mock) that updates as you take actions.",
+                panel_btn_advance: "Advance step (demo)",
+                panel_btn_db: "See DB",
+                panel_progress: "Progress",
+                panel_card_title: "Your Nexyana ID",
+                panel_card_desc: "Show this QR at the exam center (mock).",
+                panel_card_cta: "Update my profile",
+                form_name: "Full name",
+                form_phone: "WhatsApp (optional)",
+                form_years: "Years of experience",
+                form_city: "City",
+                form_docs: "ID / proof of address (mock)",
+                form_segment: "Segment",
+                seg_home: "Home",
+                seg_sme: "SMB",
+                seg_corp: "Corporate",
                 form_role: "Your Trade / Specialty",
                 form_need: "What profile are you looking to hire?",
                 form_email: "Your Email",
@@ -523,15 +777,23 @@
                 modal_talent_subtitle: "We are opening spots for technical certification in your area.",
                 modal_client_title: "You are one step away from hiring safely",
                 modal_client_subtitle: "Secure your preferential rate.",
-                btn_continue: "Continue"
+                btn_continue: "Continue",
+                success_to_panel: "Go to my panel",
+                success_to_checkout: "Continue to unlock (mock)",
+                success_to_db: "Go to database"
             },
             es: {
+                nav_companies: "Para Empresas",
+                nav_homes: "Para Hogares",
+                nav_talent: "Soy Talento (Únete)",
+                nav_panel: "Mi Panel",
+                nav_cta: "Ver Base de Datos",
                 nav_how: "Nuestro Estándar",
                 nav_pro: "Para Talento",
                 nav_hire: "Buscar Talento",
                 hero_title_1: "El Fin de la",
                 hero_title_2: "Contratación a Ciegas",
-                hero_subtitle: "No juegues a la Ruleta Rusa. Conectamos clientes exigentes con técnicos que han aprobado <strong>exámenes físicos reales</strong> y <strong>chequeos penales</strong>.",
+                hero_subtitle: "La primera plataforma que audita técnica y moralmente a cada experto antes de que entre a tu empresa o a tu casa.",
                 card_client_title: "Necesito Talento Verificado",
                 card_client_desc: "Deja de arriesgar tu patrimonio. Accede a nuestra base de profesionales filtrados.",
                 card_client_cta: "Ver Perfiles Seguros",
@@ -583,6 +845,54 @@
                 cert_score: "Puntaje Técnico",
                 cert_bg: "Antecedentes",
                 footer_tag: "El nuevo estándar de confianza.",
+                portal_title: "Portal Nexyana (Demo)",
+                portal_subtitle: "Mock estático que se siente real: recuerda tus acciones y desbloquea secciones.",
+                portal_btn_db: "Ir a la base",
+                portal_btn_panel: "Ir a mi panel",
+                portal_btn_reset: "Reiniciar demo",
+                db_tag: "Base de Datos Nexyana",
+                db_title: "Talento verificado con señales de confianza",
+                db_desc: "Filtra y previsualiza perfiles. El contacto se oculta hasta desbloquear.",
+                db_unlock_btn: "Desbloquear Acceso ($49)",
+                db_back_btn: "Ver planes",
+                db_filter_trade: "Oficio",
+                db_filter_city: "Ciudad",
+                db_filter_zone: "Zona",
+                db_filter_trust: "Filtros de confianza",
+                db_filter_all: "Todos",
+                db_zone_any: "Cualquiera",
+                db_zone_north: "Quito Norte",
+                db_zone_center: "Quito Centro",
+                db_zone_south: "Quito Sur",
+                db_zone_valleys: "Valles (Cumbayá/Tumbaco)",
+                db_trust_any: "Cualquiera",
+                db_trust_bg: "Antecedentes verificados",
+                db_trust_score: "Score 90+",
+                db_trust_verified: "Verificado por Nexyana",
+                db_geo_btn: "Usar mi ubicación (opcional)",
+                db_geo_clear: "Olvidar ubicación",
+                db_geo_note: "Funciona en HTTPS o localhost. Se guarda solo en tu navegador.",
+                db_locked_title: "Datos protegidos",
+                db_locked_desc: "Desbloquea para ver contacto + evidencia (mock).",
+                db_locked_cta: "Desbloquear ahora",
+                panel_tag: "Portal de Talento",
+                panel_title: "Tu ruta de verificación",
+                panel_desc: "Dashboard simple (mock) que cambia a medida que avanzas.",
+                panel_btn_advance: "Avanzar paso (demo)",
+                panel_btn_db: "Ver base",
+                panel_progress: "Progreso",
+                panel_card_title: "Tu ID Nexyana",
+                panel_card_desc: "Muestra este QR en el centro de examen (mock).",
+                panel_card_cta: "Actualizar mi perfil",
+                form_name: "Nombre completo",
+                form_phone: "WhatsApp (opcional)",
+                form_years: "Años de experiencia",
+                form_city: "Ciudad",
+                form_docs: "ID / domicilio (mock)",
+                form_segment: "Segmento",
+                seg_home: "Hogar",
+                seg_sme: "PYME",
+                seg_corp: "Corporativo",
                 form_role: "Tu Oficio / Especialidad",
                 form_need: "¿Qué perfil buscas contratar?",
                 form_email: "Tu Correo Electrónico",
@@ -592,14 +902,18 @@
                 modal_talent_subtitle: "Estamos abriendo cupos para certificación técnica en tu zona.",
                 modal_client_title: "Estás a un paso de contratar seguro",
                 modal_client_subtitle: "Asegura tu tarifa preferencial.",
-                btn_continue: "Continuar"
+                btn_continue: "Continuar",
+                success_to_panel: "Ir a mi panel",
+                success_to_checkout: "Continuar a desbloqueo (mock)",
+                success_to_db: "Ir a la base"
             }
         };
 
-        let currentLang = 'en';
+        let currentLang = 'es';
 
         function setLanguage(lang) {
             currentLang = lang;
+            try { localStorage.setItem('nexyana_lang_v1', lang); } catch (e) {}
             
             // Update Buttons Style
             document.getElementById('btn-en').className = lang === 'en' 
@@ -626,16 +940,22 @@
             // Update Modal Button if exists
             const btn = document.getElementById('submitBtn');
             if(btn) btn.innerText = translations[lang]['btn_continue'];
+
+            // Re-render portal UI (if visible)
+            renderDb();
+            renderTalentPanel();
         }
 
         // --- REAL TIME NOTIFICATIONS (Mock Data: Ecuador) ---
         const notifications = [
             { name: "Juan P.", role_en: "Plumber", role_es: "Plomero", city: "Quito" },
-            { name: "Maria S.", role_en: "Chef", role_es: "Chef", city: "Guayaquil" },
-            { name: "Luis R.", role_en: "Electrician", role_es: "Electricista", city: "Cuenca" },
-            { name: "Ana M.", role_en: "Registered", role_es: "Registró", city: "Manta" },
-            { name: "Pedro C.", role_en: "Mason", role_es: "Albañil", city: "Ambato" },
-            { name: "Sofia L.", role_en: "Contracted", role_es: "Contrató", city: "Quito" }
+            { name: "Andrea G.", role_en: "Electrician", role_es: "Electricista", city: "Quito" },
+            { name: "Luis R.", role_en: "Carpenter", role_es: "Carpintero", city: "Quito" },
+            { name: "Maria S.", role_en: "Dishwasher", role_es: "Lavaplatos", city: "Quito" },
+            { name: "Ana M.", role_en: "Registered", role_es: "Registró", city: "Quito" },
+            { name: "Sofia L.", role_en: "Contracted", role_es: "Contrató", city: "Quito" },
+            { name: "Pedro C.", role_en: "Plumber", role_es: "Plomero", city: "Cumbayá" },
+            { name: "Kevin V.", role_en: "Electrician", role_es: "Electricista", city: "Tumbaco" }
         ];
 
         function showNotification() {
@@ -686,6 +1006,11 @@
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
 
+        // --- HASH ROUTING (GitHub Pages friendly) ---
+        function navigate(hash) {
+            window.location.hash = hash;
+        }
+
         // --- MODAL LOGIC ---
         const modal = document.getElementById('validationModal');
         const modalTitle = document.getElementById('modalTitle');
@@ -697,6 +1022,7 @@
         const form = document.getElementById('leadForm');
         const successMsg = document.getElementById('successMessage');
         const submitBtn = document.getElementById('submitBtn');
+        const successActions = document.getElementById('successActions');
 
         function openModal(type, planName) {
             form.classList.remove('hidden');
@@ -704,6 +1030,7 @@
             form.reset();
             leadTypeInput.value = type;
             planInput.value = planName;
+            if (successActions) successActions.innerHTML = '';
 
             if (type === 'talent') {
                 modalTitle.innerText = translations[currentLang]['modal_talent_title'];
@@ -727,17 +1054,448 @@
             e.preventDefault();
             submitBtn.disabled = true;
             submitBtn.innerText = "...";
+            
+            const type = leadTypeInput.value;
+            const plan = planInput.value || '';
+            const email = (document.getElementById('leadEmail')?.value || '').trim();
+            const name = (document.getElementById('leadName')?.value || '').trim();
+            const phone = (document.getElementById('leadPhone')?.value || '').trim();
+            const now = new Date().toISOString();
+
+            const baseSession = loadSession() || {};
+
             setTimeout(() => {
+                if (type === 'talent') {
+                    const trade = document.getElementById('talentTrade')?.value || 'Other';
+                    const years = Number(document.getElementById('talentYears')?.value || 0);
+                    const city = (document.getElementById('talentCity')?.value || '').trim();
+                    const id = baseSession?.talent?.id || `NEX-${Math.floor(1000 + Math.random() * 9000)}`;
+
+                    const session = {
+                        role: 'talent',
+                        createdAt: baseSession.createdAt || now,
+                        updatedAt: now,
+                        lead: { type, plan, email, name, phone },
+                        talent: {
+                            id,
+                            trade,
+                            years,
+                            city,
+                            step: baseSession?.talent?.step || 1 // 1..5
+                        }
+                    };
+                    saveSession(session);
+
+                    if (successActions) {
+                        successActions.innerHTML = `
+                            <button onclick="closeModal(); navigate('#/panel')" class="w-full sm:w-auto px-5 py-3 rounded-lg bg-brand-primary text-white font-bold hover:bg-teal-800">${translations[currentLang]['success_to_panel'] || 'Mi Panel'}</button>
+                            <button onclick="closeModal(); navigate('#/db')" class="w-full sm:w-auto px-5 py-3 rounded-lg bg-white border border-slate-300 text-slate-800 font-bold hover:bg-slate-50">${translations[currentLang]['success_to_db'] || 'Base'}</button>
+                        `;
+                    }
+                    showToast(
+                        currentLang === 'en' ? 'Talent saved' : 'Talento guardado',
+                        currentLang === 'en' ? 'Your demo dashboard is ready.' : 'Tu panel demo está listo.'
+                    );
+                } else {
+                    const need = (document.getElementById('clientNeed')?.value || '').trim();
+                    const segment = document.getElementById('clientSegment')?.value || 'home';
+                    const city = (document.getElementById('clientCity')?.value || '').trim();
+
+                    const session = {
+                        role: 'client',
+                        createdAt: baseSession.createdAt || now,
+                        updatedAt: now,
+                        lead: { type, plan, email, name, phone },
+                        client: {
+                            segment,
+                            city,
+                            need,
+                            unlocked: baseSession?.client?.unlocked || false
+                        }
+                    };
+                    saveSession(session);
+
+                    if (successActions) {
+                        successActions.innerHTML = `
+                            <button onclick="closeModal(); openCheckout()" class="w-full sm:w-auto px-5 py-3 rounded-lg bg-brand-primary text-white font-bold hover:bg-teal-800">${translations[currentLang]['success_to_checkout'] || 'Desbloquear (mock)'}</button>
+                            <button onclick="closeModal(); navigate('#/db')" class="w-full sm:w-auto px-5 py-3 rounded-lg bg-white border border-slate-300 text-slate-800 font-bold hover:bg-slate-50">${translations[currentLang]['success_to_db'] || 'Base'}</button>
+                        `;
+                    }
+                    showToast(
+                        currentLang === 'en' ? 'Request saved' : 'Solicitud guardada',
+                        currentLang === 'en' ? 'Continue to unlock (mock) to view contacts.' : 'Continúa al desbloqueo (mock) para ver contactos.'
+                    );
+                }
+
                 form.classList.add('hidden');
                 successMsg.classList.remove('hidden');
                 submitBtn.disabled = false;
                 submitBtn.innerText = translations[currentLang]['btn_continue'];
-            }, 1000);
+
+                updateNav();
+                renderDb();
+                renderTalentPanel();
+            }, 900);
+        }
+
+        // --- STATE (localStorage) ---
+        const STORAGE_KEY = 'nexyana_session_v1';
+        const LANG_KEY = 'nexyana_lang_v1';
+
+        function loadSession() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function saveSession(session) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+        }
+
+        function resetDemo() {
+            localStorage.removeItem(STORAGE_KEY);
+            updateNav();
+            showToast(currentLang === 'en' ? 'Demo reset' : 'Demo reiniciada', currentLang === 'en' ? 'Your session was cleared.' : 'Se borró tu sesión.');
+            handleRoute();
+        }
+
+        function isUnlocked() {
+            const session = loadSession();
+            return !!(session?.role === 'client' && session?.client?.unlocked);
+        }
+
+        // --- TOAST helper (reuses existing UI) ---
+        function showToast(titleText, bodyText) {
+            const title = document.getElementById('toast-title');
+            const body = document.getElementById('toast-body');
+            const toast = document.getElementById('toast');
+            if (!title || !body || !toast) return;
+            title.innerText = titleText;
+            body.innerText = bodyText;
+            toast.classList.remove('hidden', 'translate-y-full');
+            setTimeout(() => toast.classList.add('translate-y-full'), 4000);
+        }
+
+        // --- MOCK CHECKOUT ---
+        function openCheckout() {
+            const session = loadSession();
+            if (!session || session.role !== 'client') {
+                openModal('client', 'Acceso Hogar - $49');
+                return;
+            }
+
+            form.classList.add('hidden');
+            successMsg.classList.remove('hidden');
+            modalTitle.innerText = currentLang === 'en' ? 'Checkout (Mock)' : 'Pago (Mock)';
+            modalSubtitle.innerText = currentLang === 'en'
+                ? 'This simulates Stripe/MercadoPago for the MVP demo.'
+                : 'Esto simula Stripe/MercadoPago para la demo del MVP.';
+
+            if (successActions) {
+                successActions.innerHTML = `
+                    <button onclick="simulatePayUnlock()" class="w-full sm:w-auto px-5 py-3 rounded-lg bg-brand-dark text-white font-bold hover:bg-slate-800">${currentLang === 'en' ? 'Pay now (mock)' : 'Pagar ahora (mock)'}</button>
+                    <button onclick="closeModal(); navigate('#/db')" class="w-full sm:w-auto px-5 py-3 rounded-lg bg-white border border-slate-300 text-slate-800 font-bold hover:bg-slate-50">${translations[currentLang]['success_to_db'] || 'Base'}</button>
+                `;
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function simulatePayUnlock() {
+            const session = loadSession();
+            if (!session || session.role !== 'client') return;
+            session.client.unlocked = true;
+            session.updatedAt = new Date().toISOString();
+            saveSession(session);
+            closeModal();
+            showToast(currentLang === 'en' ? 'Access unlocked' : 'Acceso desbloqueado', currentLang === 'en' ? 'Contacts are now visible (mock).' : 'El contacto ya es visible (mock).');
+            navigate('#/db');
+            renderDb();
+        }
+
+        // --- DB RENDER ---
+        const MOCK_TALENT = [
+            { first: "Carlos", last: "M.", trade: "Plumber", city: "Quito", zone: "Centro", lat: -0.2202, lon: -78.5120, score: 96, bg: true, verified: true, level: "Gold", contact: "carlos@nexyana.com" },
+            { first: "Andrea", last: "G.", trade: "Electrician", city: "Quito", zone: "Norte", lat: -0.1763, lon: -78.4807, score: 92, bg: true, verified: false, level: "Silver", contact: "andrea@nexyana.com" },
+            { first: "Luis", last: "R.", trade: "Carpenter", city: "Quito", zone: "Sur", lat: -0.2740, lon: -78.5530, score: 94, bg: true, verified: true, level: "Gold", contact: "luis@nexyana.com" },
+            { first: "Maria", last: "S.", trade: "Dishwasher", city: "Quito", zone: "Centro", lat: -0.2299, lon: -78.5249, score: 86, bg: true, verified: false, level: "Bronze", contact: "maria@nexyana.com" },
+            { first: "Pedro", last: "C.", trade: "Plumber", city: "Cumbayá", zone: "Valles", lat: -0.1996, lon: -78.4334, score: 90, bg: true, verified: false, level: "Silver", contact: "pedro@nexyana.com" },
+            { first: "Kevin", last: "V.", trade: "Electrician", city: "Tumbaco", zone: "Valles", lat: -0.2150, lon: -78.4109, score: 93, bg: true, verified: true, level: "Gold", contact: "kevin@nexyana.com" },
+            { first: "Sofia", last: "L.", trade: "Carpenter", city: "Quito", zone: "Norte", lat: -0.1605, lon: -78.4869, score: 91, bg: true, verified: false, level: "Silver", contact: "sofia@nexyana.com" }
+        ];
+
+        // --- GEO (optional) ---
+        const GEO_KEY = 'nexyana_geo_coords_v1';
+        const DB_PREFILL_KEY = 'nexyana_db_prefill_v1';
+
+        function loadGeo() {
+            try {
+                const raw = localStorage.getItem(GEO_KEY);
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function saveGeo(coords) {
+            localStorage.setItem(GEO_KEY, JSON.stringify(coords));
+        }
+
+        function clearGeo() {
+            localStorage.removeItem(GEO_KEY);
+            showToast(currentLang === 'en' ? 'Location cleared' : 'Ubicación borrada', currentLang === 'en' ? 'Sorting by distance is off.' : 'Se desactivó la cercanía.');
+            renderDb();
+        }
+
+        function requestGeo() {
+            if (!navigator.geolocation) {
+                showToast(currentLang === 'en' ? 'Not supported' : 'No compatible', currentLang === 'en' ? 'Geolocation is not available in this browser.' : 'Geolocalización no disponible en este navegador.');
+                return;
+            }
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    saveGeo({ lat: pos.coords.latitude, lon: pos.coords.longitude, ts: Date.now() });
+                    showToast(currentLang === 'en' ? 'Location enabled' : 'Ubicación activada', currentLang === 'en' ? 'Now sorting by proximity (mock).' : 'Ahora ordenamos por cercanía (mock).');
+                    renderDb();
+                },
+                () => {
+                    showToast(currentLang === 'en' ? 'Permission denied' : 'Permiso denegado', currentLang === 'en' ? 'Enable location to sort by proximity.' : 'Activa ubicación para ordenar por cercanía.');
+                },
+                { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
+            );
+        }
+
+        function haversineKm(a, b) {
+            const toRad = (x) => (x * Math.PI) / 180;
+            const R = 6371;
+            const dLat = toRad(b.lat - a.lat);
+            const dLon = toRad(b.lon - a.lon);
+            const lat1 = toRad(a.lat);
+            const lat2 = toRad(b.lat);
+            const s =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            return 2 * R * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
+        }
+
+        function renderDb() {
+            const container = document.getElementById('dbResults');
+            const overlay = document.getElementById('dbLockedOverlay');
+            if (!container || !overlay) return;
+
+            const trade = (document.getElementById('dbFilterTrade')?.value || 'all');
+            const city = (document.getElementById('dbFilterCity')?.value || '').trim().toLowerCase();
+            const zone = (document.getElementById('dbFilterZone')?.value || 'any');
+            const trust = (document.getElementById('dbFilterTrust')?.value || 'any');
+            const geo = loadGeo();
+
+            const unlocked = isUnlocked();
+            overlay.classList.toggle('hidden', unlocked);
+
+            let filtered = MOCK_TALENT.filter(p => {
+                if (trade !== 'all' && p.trade !== trade) return false;
+                if (city && !p.city.toLowerCase().includes(city)) return false;
+                if (zone !== 'any' && (p.zone || '') !== zone) return false;
+                if (trust === 'bg_ok' && !p.bg) return false;
+                if (trust === 'score_90' && p.score < 90) return false;
+                if (trust === 'verified' && !p.verified) return false;
+                return true;
+            });
+
+            if (geo) {
+                filtered = filtered
+                    .map(p => {
+                        if (typeof p.lat === 'number' && typeof p.lon === 'number') {
+                            return { ...p, distanceKm: haversineKm({ lat: geo.lat, lon: geo.lon }, { lat: p.lat, lon: p.lon }) };
+                        }
+                        return { ...p, distanceKm: null };
+                    })
+                    .sort((a, b) => {
+                        if (a.distanceKm == null && b.distanceKm == null) return 0;
+                        if (a.distanceKm == null) return 1;
+                        if (b.distanceKm == null) return -1;
+                        return a.distanceKm - b.distanceKm;
+                    });
+            }
+
+            container.innerHTML = filtered.map(p => {
+                const initials = `${p.first[0]}${p.last[0]}`;
+                const badge = p.verified ? (currentLang === 'en' ? 'VERIFIED' : 'VERIFICADO') : (currentLang === 'en' ? 'PRE-VETTED' : 'PRE-FILTRADO');
+                const badgeClass = p.verified ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700';
+                const bgText = p.bg ? (currentLang === 'en' ? 'Background OK' : 'Antecedentes OK') : (currentLang === 'en' ? 'Background pending' : 'Antecedentes pendiente');
+                const contact = unlocked ? p.contact : '••••••••••••';
+                const btnText = unlocked ? (currentLang === 'en' ? 'Message' : 'Mensaje') : (currentLang === 'en' ? 'Unlock' : 'Desbloquear');
+                const btnOnclick = unlocked
+                    ? `showToast('${currentLang === 'en' ? 'Chat opened (mock)' : 'Chat abierto (mock)'}','${currentLang === 'en' ? 'This would be an in-app chat.' : 'Aquí iría un chat interno.'}')`
+                    : 'openCheckout()';
+                const zoneLabel = p.zone ? ` • ${p.zone}` : '';
+                const distanceLabel = p.distanceKm != null ? `${p.distanceKm.toFixed(1)} km` : '';
+
+                return `
+                    <div class="bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md transition">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="h-12 w-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-700 font-bold">${initials}</div>
+                                <div>
+                                    <div class="font-extrabold text-slate-900">${p.first} ${p.last}</div>
+                                    <div class="text-xs text-slate-500">${p.trade} • ${p.city}${zoneLabel}${distanceLabel ? ` • ${distanceLabel}` : ''}</div>
+                                </div>
+                            </div>
+                            <span class="text-xs px-2 py-1 rounded ${badgeClass} font-bold">${badge}</span>
+                        </div>
+                        <div class="mt-4 grid grid-cols-3 gap-2 text-xs">
+                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2">
+                                <div class="text-slate-500">${currentLang === 'en' ? 'Score' : 'Score'}</div>
+                                <div class="font-bold text-slate-900">${p.score}/100</div>
+                            </div>
+                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2">
+                                <div class="text-slate-500">${currentLang === 'en' ? 'Level' : 'Nivel'}</div>
+                                <div class="font-bold text-slate-900">${p.level}</div>
+                            </div>
+                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2">
+                                <div class="text-slate-500">${currentLang === 'en' ? 'Integrity' : 'Integridad'}</div>
+                                <div class="font-bold text-slate-900">${bgText}</div>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between gap-3">
+                            <div class="text-sm">
+                                <div class="text-xs text-slate-500">${currentLang === 'en' ? 'Contact' : 'Contacto'}</div>
+                                <div class="font-mono font-bold text-slate-900">${contact}</div>
+                            </div>
+                            <button onclick="${btnOnclick}" class="px-4 py-2 rounded-lg ${unlocked ? 'bg-brand-primary text-white hover:bg-teal-800' : 'bg-slate-900 text-white hover:bg-slate-800'} font-bold">${btnText}</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- TALENT PANEL ---
+        function simulateTalentAdvance() {
+            const session = loadSession();
+            if (!session || session.role !== 'talent') {
+                openModal('talent', 'Examen de Certificación - $20');
+                return;
+            }
+            session.talent.step = Math.min(5, (session.talent.step || 1) + 1);
+            session.updatedAt = new Date().toISOString();
+            saveSession(session);
+            renderTalentPanel();
+            showToast(currentLang === 'en' ? 'Step updated' : 'Paso actualizado', currentLang === 'en' ? 'Your status advanced (demo).' : 'Tu estatus avanzó (demo).');
+        }
+
+        function renderTalentPanel() {
+            const stepsContainer = document.getElementById('talentSteps');
+            const bar = document.getElementById('talentProgressBar');
+            const label = document.getElementById('talentProgressLabel');
+            const idEl = document.getElementById('talentId');
+            if (!stepsContainer || !bar || !label || !idEl) return;
+
+            const session = loadSession();
+            const step = session?.role === 'talent' ? (session.talent.step || 1) : 0;
+            const pct = step ? Math.round((step / 5) * 100) : 0;
+            label.innerText = `${pct}%`;
+            bar.style.width = `${pct}%`;
+            idEl.innerText = session?.talent?.id || 'NEX-0000';
+
+            const labels = currentLang === 'en'
+                ? ['Registered', 'Payment Confirmed', 'Exam Passed', 'Background Clean', 'VERIFIED BY NEXYANA']
+                : ['Registrado', 'Pago Confirmado', 'Examen Aprobado', 'Antecedentes Limpios', 'VERIFICADO POR NEXYANA'];
+
+            stepsContainer.innerHTML = labels.map((t, idx) => {
+                const n = idx + 1;
+                const done = step >= n;
+                const pill = done ? (currentLang === 'en' ? 'Done' : 'Listo') : (currentLang === 'en' ? 'Pending' : 'Pendiente');
+                const pillClass = done ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600';
+                return `
+                    <div class="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl p-4">
+                        <div class="flex items-center gap-3">
+                            <div class="h-9 w-9 rounded-lg ${done ? 'bg-green-600' : 'bg-slate-300'} text-white flex items-center justify-center font-extrabold">${n}</div>
+                            <div>
+                                <div class="font-extrabold text-slate-900">${t}</div>
+                                <div class="text-xs text-slate-500">${currentLang === 'en' ? 'Status updates are simulated for the landing demo.' : 'Estatus simulado para demo de landing.'}</div>
+                            </div>
+                        </div>
+                        <span class="text-xs px-2 py-1 rounded font-bold ${pillClass}">${pill}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- NAV + ROUTER ---
+        function updateNav() {
+            const session = loadSession();
+            const panel = document.getElementById('nav-panel');
+            if (!panel) return;
+            panel.classList.toggle('hidden', !session);
+        }
+
+        function showPortal(show) {
+            document.getElementById('portal')?.classList.toggle('hidden', !show);
+        }
+
+        function handleRoute() {
+            const h = window.location.hash || '#/';
+            const route = h.startsWith('#/') ? h.slice(2) : '';
+
+            showPortal(false);
+            document.getElementById('portal-db')?.classList.add('hidden');
+            document.getElementById('portal-panel')?.classList.add('hidden');
+
+            if (!route || route === '/') return;
+
+            if (route === 'empresas') {
+                scrollToSection('clientes');
+                switchTab('corp');
+                return;
+            }
+            if (route === 'hogares') {
+                scrollToSection('clientes');
+                switchTab('hogar');
+                return;
+            }
+            if (route === 'talento') {
+                scrollToSection('talento');
+                return;
+            }
+            if (route === 'db') {
+                showPortal(true);
+                document.getElementById('portal-db')?.classList.remove('hidden');
+                // Prefill Quito only the first time the user visits the DB
+                try {
+                    const prefilled = localStorage.getItem(DB_PREFILL_KEY);
+                    if (!prefilled) {
+                        const cityInput = document.getElementById('dbFilterCity');
+                        if (cityInput && !cityInput.value) cityInput.value = 'Quito';
+                        localStorage.setItem(DB_PREFILL_KEY, '1');
+                    }
+                } catch (e) {}
+                renderDb();
+                return;
+            }
+            if (route === 'panel') {
+                showPortal(true);
+                document.getElementById('portal-panel')?.classList.remove('hidden');
+                renderTalentPanel();
+                return;
+            }
         }
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
+
+        window.addEventListener('hashchange', handleRoute);
+
+        (function init() {
+            const storedLang = localStorage.getItem(LANG_KEY);
+            setLanguage(storedLang || 'es');
+            updateNav();
+            handleRoute();
+            renderDb();
+            renderTalentPanel();
+        })();
     </script>
 </body>
 </html>
